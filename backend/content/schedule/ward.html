@@ -1,0 +1,112 @@
+<section class="content-header">
+  <h1>
+    <i class="fa fa-th"></i> ตารางปฏิบัติงาน
+    <small>Data Tables</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#/"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
+    <li><a href=""><i class="fa fa-th"></i> ตารางปฏิบัติงาน</a></li>
+    <li class="active"><i class="fa fa-table"></i> ตารางทั้งหมด</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- /.box -->
+      <div class="box  bg-blue">
+              <div class="box-header">
+                <i class="fa fa-search"></i>
+                <h3 class="box-title">ข้อมูลประจำหน่วยงาน {{depObj.Cost_name}}</h3>
+                <!-- tools box -->
+
+                <div class="box-tools pull-right">
+                  <button class="btn btn-xs btn-warning pull-right" data-ng-click="gotoBack()">
+                      <i class="fa fa-fw fa-mail-reply"></i><span> กลับ</span>
+                  </button>
+                </div>
+                <!-- /. tools -->
+              </div>
+              <!-- /.box-header -->
+              <!-- /.box-body -->
+              <div class="box-footer text-black">
+
+                <!-- /.row -->
+              </div>
+        </div>
+
+        <div class="box-body">
+          <table id="example1" class="table table-bordered table-striped ">
+            <thead>
+            <tr>
+              <th>No.</th>
+              <th>Monthly Period</th>
+              <th>Year Period</th>
+              <th>Create By</th>
+              <th>Process</th>
+              <th>Label</th>
+              <th>Early Month</th>
+
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="schl in scheduleList">
+              <td>{{$index+1}}</td>
+              <td class="text-left">เดือน{{schl.MONTH}}</td>
+              <td class="text-left">พ.ศ. {{schl.YEAR_TXT}}</td>
+              <td class="text-left">{{schl.FIRSTNAME}} {{schl.LASTNAME}}</td>
+              <td ><div class="progress progress-xs progress-striped active">
+                      <div class="progress-bar progress-bar-{{schl.colorProcess}}" data-ng-style="{width:schl.perentWidth}"></div>
+                    </div>
+
+            </td>
+            <td><span class="badge bg-{{schl.colorPercent}}">{{schl.percent}}%</span></td>
+            <td>
+              <i class="fa fa-check text-green" aria-hidden="true" data-ng-show="schl.early"></i>
+              <i class="fa fa-refresh fa-spin text-orange" aria-hidden="true" data-ng-hide="schl.early"></i>
+            </td>
+              <td class="action">
+                <a href="" data-tooltip="ตาราง" data-ng-click="gotoDraf(schl.ID)"><i class="fa fa-calendar"></i></a>
+                <!-- <a href="" data-tooltip="แก้ไข" data-ng-click="gotoEdit(schl.ID)"><i class="fa fa-fw fa-edit"></i></a> -->
+                <a href="" data-tooltip="ลบ" data-ng-click="delete(schl.ID,schl.MONTH_NO,schl.YEAR_NO)"><i class="fa fa-fw fa-trash-o"></i></a>
+
+              </td>
+            </tr>
+            <tr data-ng-show="scheduleList == '' || scheduleList == undefined">
+                  <td colspan="5" data-translate>ไม่มีข้อมูล</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>No.</th>
+              <th>Monthly Period</th>
+              <th>Year Period</th>
+              <th>Create By</th>
+              <th>Process</th>
+              <th>Label</th>
+              <th>Early Month</th>
+              <th>Actions</th>
+            </tr>
+            </tfoot>
+          </table>
+          <div class="row">
+               <div class="col-sm-4">
+                </div>
+                <div class="col-sm-4">
+                      <div class="dataTables_info">Showing {{paging.showing.start}} to {{paging.showing.end}} of {{paging.showing.total}} entries</div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="dataTables_paginate paging_bootstrap">
+                    <div data-pagination data-total-items="paging.totalItems" data-items-per-page="paging.limit" data-page="paging.pageNumber" data-max-size="5" data-boundary-links="true" data-on-select-page="selectPage(page)"></div>
+                  </div>
+                </div>
+          </div>
+
+        </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>

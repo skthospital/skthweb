@@ -1,0 +1,156 @@
+<section class="content-header">
+  <h1>
+    แบบฟอร์มสร้าง ตารางเวร
+    <small>Preview</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
+    <li><a href="#">จัดการข้อมูล</a></li>
+    <li class="active" data-ng-show="mode=='create'">เพิ่มตำแหน่ง</li>
+    <li class="active" data-ng-show="mode=='edit'">แก้ไขตำแหน่ง</li>
+
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <!-- right column -->
+    <div class="col-md-12">
+      <!-- Horizontal Form -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title" >Create Form</h3>
+          <div class="box-tools pull-right">
+
+              <button class="btn btn-xs btn-success" data-ng-click="create()">
+                     <i class="fa fa-fw fa-save"></i><span>บันทึก</span>
+              </button>
+
+
+
+              <button class="btn btn-xs btn-warning" data-ng-click="back()">
+                     <i class="fa fa-fw fa-mail-reply"></i><span>Back</span>
+              </button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form name="form" data-unsaved-warning="true" novalidate class="form-horizontal">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">กลุ่มงาน :</label>
+
+              <div class="col-sm-8">
+                <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.group">
+                    <option></option>
+                    <option data-ng-repeat="gl in groupList"    value="{{gl.g_id}}">
+                        {{gl.g_name}}
+                    </option>
+                </select>
+                <span class="help-block-error" data-ng-show="err.groupErr">กรุณาเลือก !</span>
+              </div>
+              <div class="col-sm-2">
+                <button class="btn btn-xs btn-success" data-ng-click="newGroup()" style="min-width: 10px;">
+                       <i class="fa fa-plus-circle"></i>
+                </button>
+              </div>
+            </div>
+            <div class="form-group" data-ng-show="criteria.group">
+              <label for="inputPassword3" class="col-sm-2 control-label">สถานที่ปฏิบัติงาน :</label>
+
+              <div class="col-sm-8">
+                <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.ward" data-ng-click="getPersonalWard(criteria.ward)">
+                    <option></option>
+                    <option data-ng-repeat="wl in wardList"    value="{{wl.Cost_id}}">
+                        {{wl.Cost_name}}
+                    </option>
+                </select>
+                <span class="help-block-error" data-ng-show="err.wardErr">กรุณาเลือก !</span>
+
+              </div>
+              <div class="col-sm-2">
+                <button class="btn btn-xs btn-success" data-ng-click="newWard()" style="min-width: 10px;">
+                       <i class="fa fa-plus-circle"></i>
+                </button>
+              </div>
+
+            </div>
+            <div class="form-group" data-ng-show="criteria.ward">
+              <label for="inputPassword3" class="col-sm-2 control-label">ปี :</label>
+              <div class="col-sm-8">
+                <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.year" data-ng-click="getMonth()">
+                    <option></option>
+                    <option data-ng-repeat="yl in yearList"   value="{{yl.yearC}}">
+                        {{yl.year}}
+                    </option>
+                </select>
+                <span class="help-block-error" data-ng-show="err.yearErr">กรุณาเลือก !</span>
+              </div>
+            </div>
+            <div class="form-group" data-ng-show="criteria.year">
+              <label for="inputPassword3" class="col-sm-2 control-label">เดือน :</label>
+              <div class="col-sm-8">
+                <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.month">
+                    <option></option>
+                    <option data-ng-repeat="ml in monthList"  data-ng-disabled="ml.dis"  value="{{ml.lov_value}}">
+                        {{ml.lov_name}}
+                    </option>
+                </select>
+                <span class="help-block-error" data-ng-show="err.monthErr">กรุณาเลือก !</span>
+              </div>
+            </div>
+            <div class="form-group" data-ng-show="criteria.ward">
+              <div class="col-sm-2">
+              </div>
+              <div class="col-sm-8">
+                <table id="example1" class="table table-bordered table-striped ">
+                  <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Position</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr data-ng-repeat="psl in personalList">
+                    <td>{{$index+1}}</td>
+                    <td class="text-left">{{psl.Mem_name}}  {{psl.Mem_lastname}} </td>
+                    <td class="text-left">{{psl.Position_Name}}</td>
+
+                  </tr>
+                  <tr data-ng-show="personalList == '' || personalList == undefined">
+                      	<td colspan="5" data-translate>ไม่มีข้อมูล</td>
+                  </tr>
+                  </tbody>
+
+                </table>
+              </div>
+
+            </div>
+
+
+
+          </div>
+
+
+
+          <!-- /.box-body -->
+          <div class="box-footer">
+          </div>
+          <!-- /.box-footer -->
+        </form>
+      </div>
+      <!-- /.box -->
+      <!-- general form elements disabled -->
+
+      <!-- /.box -->
+    </div>
+    <div>
+
+    </div>
+    <!--/.col (right) -->
+  </div>
+  <!-- /.row -->
+</section>

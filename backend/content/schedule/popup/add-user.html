@@ -1,0 +1,39 @@
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel()"><span
+                data-aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <span lang="En"  style="color: green; font-size: 24px; font-weight: bold; line-height: 30px;">เพิ่มผู้ปฏิบัติงานที่ {{wardObj.Cost_name}}</span>&nbsp;&nbsp;
+
+    </div>
+    <div class="modal-body">
+        <!-- ############# Content Of reserv ################## -->
+        <div class="row form-group">
+                <!-- ######## FROM RESERV ############## -->
+                <div class="col-sm-12">
+                    <label class="col-sm-3 text-inline"><strong>ผู้ปฏิบัติงาน :</strong></label>
+
+                    <div class="col-sm-7">
+                      <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.personal">
+                          <option></option>
+                          <option data-ng-repeat="psnl in personalList"  data-ng-disabled="psnl.disabledList"  value="{{psnl.ID}}">
+                              {{psnl.PRENAME}}{{psnl.FIRSTNAME}}  {{psnl.LASTNAME}} [สังกัด{{psnl.DEPARTMENT}} ตำแหน่ง{{psnl.LVLNAME}}]
+                          </option>
+                      </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- <pre>{{getSubj | json}}</pre> -->
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-success btn-xs" data-dismiss="modal" data-ng-click="save()" >
+              <i class="fa fa-check-circle"></i>&nbsp;&nbsp;<span data-translate>บันทึก</span>
+          </button>
+          <button type="button" class="btn btn-warning btn-xs" data-dismiss="modal" data-ng-click="cancel()">
+              <i class="fa fa-times"></i>&nbsp;&nbsp;<span data-translate>ยกเลิก</span>
+          </button>
+
+        </div>
+    </div>

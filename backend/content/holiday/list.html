@@ -1,0 +1,124 @@
+<section class="content-header">
+  <h1>
+    รายการวันหยุดนักขัตฤกษ์ทั้งหมด
+    <small>advanced tables</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#/"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
+    <li><a href="">จัดการข้อมูล</a></li>
+    <li class="active">รายการวันหยุดนักขัตฤกษ์ทั้งหมด</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- /.box -->
+      <div class="box  bg-blue">
+      				<div class="box-header">
+      					<i class="fa fa-calendar"></i>
+      					<h3 class="box-title">Calendar</h3>
+      					<!-- tools box -->
+      					<div class="pull-right box-tools">
+      						<!-- button with a dropdown -->
+      						<button type="button"  data-ng-hide="editBtn" class="btn btn-success btn-xs" data-ng-click="save()"><i class="fa fa-save"></i><span> Save</span>
+      						</button>
+                  <button type="button" data-ng-show="editBtn" class="btn btn-success btn-xs" data-ng-click="editSave(criteria.id,criteria.name,criteria.hl_date)"><i class="fa fa-edit"></i><span> Edit</span>
+      						</button>
+
+      					</div>
+      					<!-- /. tools -->
+      				</div>
+      				<!-- /.box-header -->
+
+      				<!-- /.box-body -->
+      				<div class="box-footer text-black">
+                <div class="row form-group">
+            				<div class="col-sm-6">
+            					<label class="col-sm-4 text-inline">วันหยุด :</label>
+            					<div class="col-sm-7">
+                        <input type="text" class="form-control input-xs" data-ng-model="criteria.name">
+
+            					</div>
+            				</div>
+          				<div class="col-sm-6">
+          					<label class="col-sm-5 text-inline">วันที่ :</label>
+          					<div class="col-sm-7">
+          						<div class='input-group' datadatepicker
+          							data-ng-model="criteria.hl_date" id="coverDate">
+          							<input type='text' class="form-control input-xs col-xs-6">
+          							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+          						</div>
+          					</div>
+          				</div>
+			          </div>
+      					<!-- /.row -->
+      				</div>
+      	</div>
+      </div>
+
+  </div>
+
+
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th >No.</th>
+              <th width="50%">Name</th>
+              <th >Date</th>
+              <th>Created</th>
+              <th>Last Updated</th>
+              <th >Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="hl in holidayList">
+              <td>{{$index+1}}</td>
+              <td class="text-left">{{hl.h_name}}</td>
+              <td class="text-left" nowrap>{{hl.h_date}}</td>
+              <td class="text-center" nowrap>{{hl.created_date}}</td>
+              <td class="text-center" nowrap>{{hl.updated_date}} </td>
+
+              <td class="action">
+                <a href="" data-ng-click="edit(hl.h_id,hl.h_name,hl.h_date)"><i class="fa fa-fw fa-edit"></i></a>
+                <a href="" data-ng-click="delete(hl.h_id)"><i class="fa fa-fw fa-trash-o"></i></a>
+              </td>
+            </tr>
+
+            </tbody>
+            <tfoot>
+            <tr>
+              <th >No.</th>
+              <th >Name</th>
+              <th >Date</th>
+              <th>Created</th>
+              <th>Last Updated</th>
+              <th >Actions</th>
+            </tr>
+            </tfoot>
+          </table>
+          <div class="row">
+			         <div class="col-sm-4">
+
+			          </div>
+			          <div class="col-sm-4">
+				              <div class="dataTables_info">Showing {{paging.showing.start}} to {{paging.showing.end}} of {{paging.showing.total}} entries</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="dataTables_paginate paging_bootstrap">
+					<div data-pagination data-total-items="paging.totalItems" data-items-per-page="paging.limit" data-page="paging.pageNumber" data-max-size="5" data-boundary-links="true" data-on-select-page="selectPage(page)"></div>
+				</div>
+			</div>
+		</div>
+        </div>
+
+        <!-- /.box-body -->
+
+      <!-- /.box -->
+
+    <!-- /.col -->
+
+  <!-- /.row -->
+</section>

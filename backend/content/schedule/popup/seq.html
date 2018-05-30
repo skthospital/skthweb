@@ -1,0 +1,37 @@
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel()"><span
+                data-aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <span lang="En"  style="color: green; font-size: 24px; font-weight: bold; line-height: 30px;">แบบฟอร์มแลกเวลาปฏิบัติงาน</span>&nbsp;&nbsp;
+
+    </div>
+    <div class="modal-body">
+        <!-- ############# Content Of reserv ################## -->
+        <table style="width:auto;" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody ui:sortable ng:model="list">
+            <tr ng:repeat="item in list" class="item" style="cursor: move;">
+                <td>{{$index}}</td>
+                <td>{{item}}</td>
+            </tr>
+        </tbody>
+
+        </div>
+        <!-- <pre>{{getSubj | json}}</pre> -->
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-success btn-xs" data-dismiss="modal" data-ng-click="save()" >
+              <i class="fa fa-check-circle"></i>&nbsp;&nbsp;<span data-translate>บันทึก</span>
+          </button>
+          <button type="button" class="btn btn-warning btn-xs" data-dismiss="modal" data-ng-click="cancel()">
+              <i class="fa fa-times"></i>&nbsp;&nbsp;<span data-translate>ยกเลิก</span>
+          </button>
+
+        </div>
+    </div>

@@ -1,0 +1,96 @@
+<section class="content-header">
+  <h1>
+    General Form Elements
+    <small>Preview</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
+    <li><a href="#">จัดการข้อมูล</a></li>
+    <li class="active" data-ng-show="mode=='create'">เพิ่มตำแหน่ง</li>
+    <li class="active" data-ng-show="mode=='edit'">แก้ไขตำแหน่ง</li>
+
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <!-- right column -->
+    <div class="col-md-12">
+      <!-- Horizontal Form -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Create Form</h3>
+          <div class="box-tools pull-right">
+
+              <button class="btn btn-xs btn-success" data-ng-click="create()">
+                     <i class="fa fa-fw fa-save"></i><span>Create</span>
+              </button>
+
+              <button class="btn btn-xs btn-warning" data-ng-click="back()">
+                     <i class="fa fa-fw fa-mail-reply"></i><span>Back</span>
+              </button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Initials :</label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputEmail3" placeholder="ชื่อย่อ" data-ng-model="criteria.Position_Initals" required>
+                <span class="help-block-error" data-ng-show="err.shortNameErr">is required !</span>
+
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">Full Name :</label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputPassword3" placeholder="ชื่อเต็ม" data-ng-model="criteria.Position_Name" required>
+                <span class="help-block-error" data-ng-show="err.longNameErr">is required !</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">Code :</label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputPassword3" placeholder="รหัส" data-ng-model="criteria.Position_Code" required>
+                <span class="help-block-error" data-ng-show="err.codeErr">is required !</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">Noraml Rate :</label>
+              <div class="col-sm-8">
+                <input type="number" class="form-control" id="inputPassword3" placeholder="ค่าตอบแทน" data-ng-model="criteria.Position_NRate" required>
+                <span class="help-block-error" data-ng-show="err.overNErr">is required !</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">OT Rate :</label>
+
+              <div class="col-sm-8">
+                <input type="number" class="form-control" id="inputPassword3" placeholder="ค่าตอบแทน" data-ng-model="criteria.Position_OTRate" required>
+                <span class="help-block-error" data-ng-show="err.overOTErr">is required !</span>
+              </div>
+            </div>
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            
+          </div>
+          <!-- /.box-footer -->
+        </form>
+      </div>
+      <!-- /.box -->
+      <!-- general form elements disabled -->
+
+      <!-- /.box -->
+    </div>
+    <!--/.col (right) -->
+  </div>
+  <!-- /.row -->
+</section>

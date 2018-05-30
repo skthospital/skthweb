@@ -1,0 +1,85 @@
+<div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel()"><span
+                    data-aria-hidden="true">&times;</span></button>
+            <h3 ><a href="">เวรประจำวันที่ {{dayWork}} {{monthWork.lov_desc}} {{yearWork}}  <label style="color:#f39c12" data-ng-show="holidayObj.data.length != 0">( {{holidayObj.data.h_name}} )</label></a></h3>
+        </div>
+        <div class="modal-body">
+            <!-- ############# Content Of reserv ################## -->
+            <div class="row form-group">
+              <div class="col-sm-1">
+              </div>
+              <div class="col-sm-10">
+                  <label class="col-sm-3 text-inline"><strong>ผู้ปฏิบัติงาน :</strong></label>
+
+                  <div class="col-sm-7 text-inline">
+                    <label class="text-inline">{{user_id}}</label> <label class="text-inline"><a href="">{{userObj.Position_Name}}</a></label> <small class="label label-danger" data-ng-show="countOff.c_off!=0"><i class="fa fa-clock-o"></i> {{countOff.c_off}} off</small>
+                  </div>
+
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-1">
+              </div>
+              <div class="col-sm-10">
+                  <label class="col-sm-3 text-inline"><strong>ช่วงเวลาปฏิบัติงาน :</strong></label>
+
+                  <div class="col-sm-7 text-inline" data-ng-show="category == 0 || editType == 1">
+                    <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.workVal">
+                        <option></option>
+                        <option data-ng-repeat="t in workList"   value="{{t}}">
+                            {{t.wl_name}}
+                        </option>
+                    </select>
+                  </div>
+                  <div class="col-sm-7 text-inline" data-ng-hide="category == 0 || editType == 1" >
+                    <label class="text-inline">{{personalData.wl_name}}  <a href="" data-ng-click="setEdit(1)"><i class="fa fa-edit"></i></a></label>
+                  </div>
+              </div>
+
+            </div>
+            <div class="row form-group" data-ng-hide="personalData.t_ward_no == null">
+              <div class="col-sm-1">
+              </div>
+              <div class="col-sm-10">
+                  <label class="col-sm-3 text-inline"><strong>สถานที่ :</strong></label>
+                  <div class="col-sm-7 text-inline">
+                    <label class="text-inline">{{personalData.Cost_name}}</label>
+                  </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-1">
+              </div>
+              <div class="col-sm-10">
+
+              </div>
+            </div>
+
+            </div>
+            <!-- <pre>{{getSubj | json}}</pre> -->
+            <div class="modal-footer ">
+              <div class="pull-right">
+                <button type="button" class="btn btn-info btn-xs" data-dismiss="modal" data-ng-show="countOff.c_off!=0" data-ng-disabled="criteria.workVal == undefined || criteria.workVal == ''"
+                    data-ng-click="useOff()" >
+                    <i class="fa fa-sign-in"></i>&nbsp;&nbsp;<span data-translate>ใช้เวร</span>
+                </button>
+                <button type="button" class="btn btn-warning btn-xs" data-ng-hide="personalData.wl_off == 1"  data-dismiss="modal" data-ng-click="off()">
+                    <i class="fa fa-flash"></i>&nbsp;&nbsp;<span data-translate>Off เวร</span>
+                </button>
+
+                <button type="button" class="btn btn-success btn-xs" data-dismiss="modal"   data-ng-click="save()" >
+                    <i class="fa  fa-save"></i>&nbsp;&nbsp;<span data-translate>บันทึก</span>
+                </button>
+                <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal" data-ng-click="delete()" data-ng-hide="personalData.wl_name ==null">
+                    <i class="fa fa-window-close-o"></i>&nbsp;&nbsp;<span data-translate>ยกเลิกเวร</span>
+                </button>
+                <button type="button" class="btn btn-warning btn-xs" data-dismiss="modal" data-ng-click="cancel()">
+                    <i class="fa fa-times"></i>&nbsp;&nbsp;<span data-translate>ปิดหน้าต่าง</span>
+                </button>
+              </div>
+              
+
+
+            </div>
+        </div>

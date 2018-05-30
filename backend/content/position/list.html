@@ -1,0 +1,132 @@
+<section class="content-header">
+  <h1>
+    รายการตำแหน่งทั้งหมด
+    <small>advanced tables</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#/"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
+    <li><a href="">จัดการข้อมูล</a></li>
+    <li class="active">รายการตำแหน่งทั้งหมด</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+
+      <div class="box  bg-blue">
+      				<div class="box-header">
+      					<i class="fa fa-search"></i>
+      					<h3 class="box-title">Search Criteria</h3>
+      					<!-- tools box -->
+                <div class="box-tools pull-right">
+    				        <button class="btn btn-xs btn-primary" data-ng-click="search()">
+    					             <i class="fa fa-search"></i><span>Search</span>
+    				        </button>
+    				        <button class="btn btn-xs btn-warning" data-ng-click="clear()">
+    					             <i class="fa fa-times"></i><span>Clear</span>
+    				        </button>
+    			      </div>
+      					<!-- /. tools -->
+      				</div>
+      				<!-- /.box-header -->
+
+      				<!-- /.box-body -->
+      				<div class="box-footer text-black">
+                <div class="row form-group">
+          			<div class="col-sm-4">
+          					<label class="col-sm-5 text-inline">Initials :</label>
+          					<div class="col-sm-7">
+          						<input type="text" class="form-control input-xs" data-ng-model="criteria.initials">
+          					</div>
+          				</div>
+          				<div class="col-sm-4">
+          					<label class="col-sm-5 text-inline">Full Name :</label>
+          					<div class="col-sm-7">
+          						<input type="text" class="form-control input-xs" data-ng-model="criteria.full_name">
+          					</div>
+          				</div>
+          				<div class="col-sm-4">
+          					<label class="col-sm-5 text-inline">Code :</label>
+                    <div class="col-sm-7">
+          						<input type="text" class="form-control input-xs" data-ng-model="criteria.code">
+          					</div>
+          				</div>
+          			</div>
+      					<!-- /.row -->
+      				</div>
+      	</div>
+      <!-- /.box -->
+
+      </div>
+  </div>
+        <button class="btn btn-xs btn-success" data-ng-click="gotoCreate()">
+            <i class="fa fa-plus-circle"></i><span> Create</span>
+        </button>
+
+
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th width="5%"  >#</th>
+              <th >Initials</th>
+              <th >Full Name</th>
+              <th >Code</th>
+              <th>Normal Rate</th>
+              <th>OT Rate</th>
+              <th >Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="pl in positionList">
+              <td>{{paging.showing.start+$index}}</td>
+              <td class="text-left">{{pl.INITIAL}}</td>
+              <td class="text-left">{{pl.POSITIONNAME}}</td>
+              <td>{{pl.CODE}}</td>
+              <td>{{pl.NORMALRATE}} บาท</td>
+              <td>{{pl.OTRATE}} บาท</td>
+
+              <td class="action">
+                <a href="" data-ng-click="gotoEdit(pl.ID)"><i class="fa fa-fw fa-edit"></i></a>
+                <a href="" data-ng-click="delete(pl.ID)"><i class="fa fa-fw fa-trash-o"></i></a>
+              </td>
+            </tr>
+
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>#</th>
+              <th>Initials</th>
+              <th>Full Name</th>
+              <th>Code</th>
+              <th>Normal Rate</th>
+              <th>OT Rate</th>
+              <th>Actions</th>
+            </tr>
+            </tfoot>
+          </table>
+          <div class="row">
+			         <div class="col-sm-4">
+
+			          </div>
+			          <div class="col-sm-4">
+				              <div class="dataTables_info">Showing {{paging.showing.start}} to {{paging.showing.end}} of {{paging.showing.total}} entries</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="dataTables_paginate paging_bootstrap">
+					<div data-pagination data-total-items="paging.totalItems" data-items-per-page="paging.limit" data-page="paging.pageNumber" data-max-size="5" data-boundary-links="true" data-on-select-page="selectPage(page)"></div>
+				</div>
+			</div>
+		</div>
+        </div>
+
+        <!-- /.box-body -->
+
+      <!-- /.box -->
+
+    <!-- /.col -->
+
+  <!-- /.row -->
+</section>

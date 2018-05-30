@@ -1,0 +1,39 @@
+<div class="row form-group">
+    <div class="col-sm-12">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-4">
+        <label class="multi-tab col-sm-12"><span data-translate>รายชื่อ</span></label>
+        <div id="selected-list-id">
+          <select id="selectedBuList" class="col-sm-12" size="9" ng-model="selected.available" MULTIPLE ng-options="e as e[displayAttr] for e in available" style="background: rgba(255, 99, 82, 0.14)"></select>
+        </div>
+      </div>
+
+      <div class="col-sm-1">
+
+
+        <button class="col-sm-12 btn btn-success"  data-ng-click="add()" ng-disabled="selected.available.length == 0">
+          <i class="fa fa-angle-double-right"></i>
+        </button>
+
+
+        <div class="col-sm-2"></div>
+        <div class="row-br"></div>
+        <div class="col-sm-2"></div>
+
+
+        <div class="col-sm-12"></div>
+        <div class="col-sm-2"></div>
+        <button class="col-sm-12 btn btn-danger" ng-click="remove()" ng-disabled="selected.current.length == 0">
+          <i class="fa fa-angle-double-left"></i>
+        </button>
+
+      </div>
+      <div class="col-sm-4">
+        <label class="multi-tab col-sm-12"><span data-translate data-tooltip="ส่วนนี้จะถูกบันทึก">ผู้ปฏิบัติงาน</span></label>
+        <div id="available-list-id">
+          <select id="allBuList" ng-model="selected.current" class="col-sm-12" size="9" MULTIPLE ng-options="e as e[displayAttr] for e in model" style="background: rgba(90, 197, 148, 0.17)"></select>
+        </div>
+      </div>
+
+    </div>
+  </div>

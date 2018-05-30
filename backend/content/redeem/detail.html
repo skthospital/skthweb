@@ -1,0 +1,168 @@
+<section class="content-header">
+  <h1>
+    <i class="fa fa-th"></i> ตารางปฏิบัติงาน
+    <small>advanced tables</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#/"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
+    <li><a href="#/schedules"><i class="fa fa-th"></i> ตารางปฏิบัติงาน</a></li>
+    <li class="active"><i class="fa fa-table"></i> ตารางทั้งหมด</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- /.box -->
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">แบบฟอร์มแลกเปลี่ยนช่วงเวลาปฏิบัติงาน </h3>
+          <div class="box-tools pull-right">
+          <button class="btn btn-xs btn-success" data-ng-click="save()">
+              <i class="fa fa-fw fa-save"></i><span> บันทึก</span>
+          </button>
+          <button class="btn btn-xs btn-warning" data-ng-click="back()">
+              <i class="fa fa-fw fa-mail-reply"></i><span> กลับ</span>
+          </button>
+        </div>
+          </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row form-group">
+            <div class="col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h4>{{mem1Obj.Pre_name}}{{mem1Obj.Mem_name}} {{mem1Obj.Mem_lastname}}</h4>
+              <p>ตำแหน่ง {{mem1Obj.Position_Name}}</p>
+              <p>หน่วยงาน {{mem1Obj.Cost_name}}</p>
+            </div>
+            <div class="icon">
+              <i class="fa  fa-user-plus"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+              แลก <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h4 data-ng-show="personalObj">{{personalObj.Pre_name}}{{personalObj.Mem_name}} {{personalObj.Mem_lastname}}</h4>
+          <p data-ng-show="personalObj">ตำแหน่ง {{personalObj.Position_Name}}</p>
+          <p data-ng-show="personalObj">หน่วยงาน {{personalObj.Cost_name}}</p>
+          <h4 data-ng-hide="personalObj">กรุณาเลือก</h4>
+          <p data-ng-hide="personalObj">กรุณาเลือก</p>
+          <p data-ng-hide="personalObj">กรุณาเลือก</p>
+        </div>
+        <div class="icon">
+          <i class="fa  fa-user-plus"></i>
+        </div>
+        <a href="#" class="small-box-footer">
+          <i class="fa fa-arrow-circle-left"></i> แลก
+        </a>
+      </div>
+    </div>
+
+            <!-- <div class="col-sm-6">
+              <label class="col-sm-4 text-inline">ผู้แลก :</label>
+              <div class="col-sm-8">
+                <label class="text-inline">{{fullNameMem1}}</label>
+              </div>
+            </div> -->
+            <!-- <div class="col-sm-6">
+              <label class="col-sm-4 text-inline">ตำแหน่ง :</label>
+              <div class="col-sm-8">
+                <label class="text-inline">{{mem1Obj.Position_Name}}</label>
+              </div>
+            </div> -->
+          </div>
+          <div class="row from-group">
+            <div class="col-xs-12 ">
+          <!-- small box -->
+              <label class="col-sm-2 text-inline">แลกกับ :</label>
+              <div class="col-sm-8">
+                <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}" data-ng-click="selectFri()"   data-ng-model="criteria.fri">
+                    <option></option>
+                    <option data-ng-repeat="p in personals"   value="{{p.Mem_ID}}">
+                        {{p.Pre_name}}{{p.Mem_name}}  {{p.Mem_lastname}} หน่วยงาน {{p.Cost_name}}</i>
+                    </option>
+                </select>
+                <span class="help-block-error" data-ng-show="error.errorDateF">กรุณาเลือก !</span>
+              </div>
+            </div>
+          </div>
+        </br>
+          <div class="row from-group">
+            <div class="col-sm-12">
+    					<label class="col-sm-2 text-inline">วันที่ :</label>
+    					<div class="col-sm-8">
+    						<div class='input-group date' data-datepicker
+    							data-ng-model="criteria.hl_date" id="coverDate">
+    							<input type='text' class="form-control input-xs col-xs-6">
+    							<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+    						</div>
+    					</div>
+    				</div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <div class="box">
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <label class="col-sm-4 text-inline">กับ :</label>
+            <div class="col-sm-8">
+              <label class="text-inline">{{fullNameMem2}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label class="col-sm-4 text-inline">ตำแหน่ง :</label>
+            <div class="col-sm-8">
+              <label class="text-inline">{{mem2Obj.Position_Name}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-sm-8">
+            <label class="col-sm-3 text-inline" style="margin-left: -3px;">หน่วยงาน :</label>
+            <div class="col-sm-8">
+              <label class="text-inline">{{mem2Obj.Cost_name}}</label>
+            </div>
+          </div>
+
+          <!-- <div class="col-sm-6">
+            <label class="col-sm-3 text-inline">วันที่เริ่มต้น :</label>
+            <div class="col-sm-8">
+              <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.day_id">
+                  <option></option>
+                  <option data-ng-repeat="d in objects"   value="{{d.date}}">
+                      {{d.date}} </i>
+                  </option>
+              </select>
+              <span class="help-block-error" data-ng-show="error.errorDateF">กรุณาเลือก !</span>
+            </div>
+          </div> -->
+          <!-- <div class="col-sm-6">
+            <label class="col-sm-4 text-inline">แลกเป็น :</label>
+            <div class="col-sm-8">
+              <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.workVal">
+                  <option></option>
+                  <option data-ng-repeat="t in workList"   value="{{t.wl_id}}">
+                      {{t.wl_name}}  <i class="{{t.wl_icon}}"></i>
+                  </option>
+              </select>
+
+              <span class="help-block-error" data-ng-show="error.errorDateT">กรุณาเลือก !</span>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+
+</section>

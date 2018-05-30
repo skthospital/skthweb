@@ -1,0 +1,366 @@
+<section class="content-header">
+	<h1>
+		Scheduler Task
+		<small>Control panel</small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li class="active">Scheduler Task</li>
+	</ol>
+</section>
+
+
+<section class="content">
+	<!-- Small boxes (Stat box) -->
+
+	<!-- /.row -->
+	<!-- Main row -->
+	<div class="row">
+		<div class="col-md-3">
+				<div class="box box-primary">
+	        <div class="box-body box-profile">
+	          <img class="profile-user-img img-responsive img-circle" ng-src="jcrop/upload_pic/{{userObj.PICTURE}}" alt="User profile picture">
+
+	          <h2 class="profile-username text-center">{{userObj.Pre_name}}{{userObj.Mem_name}} {{userObj.Mem_lastname}}  </h2>
+	          <p class="text-muted text-center">ตำแหน่ง {{userObj.POSITION}} </p>
+	          <p class="text-muted text-center">สังกัด {{userObj.Cost_name}} </p>
+						<ul class="nav nav-stacked">
+							<li><a href="#">ปฏิบัติงานบ่าย - ดึก <span class="pull-right badge bg-black">{{cNM.nm}}</span></a></li>
+							<li><a href="#">ปฏิบัติงานโอที <span class="pull-right badge bg-red">{{ot}}</span></a></li>
+							<li><a href="#" data-ng-click="search()">ยอดค้าง <span class="pull-right badge bg-aqua">{{cOffObj.due}}</span></a></li>
+						</ul>
+	        </div>
+	        <!-- /.box-body -->
+	      </div>
+          <div class="info-box bg-green pointer" >
+            <span class="info-box-icon"><i class="fa fa-refresh"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">แลกเวร</span>
+              <span class="info-box-number">41,410</span>
+              <div class="progress">
+                <div class="progress-bar" style="width: 70%"></div>
+              </div>
+                  <span class="progress-description">
+                    70% Increase in 30 Days
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+		<div class="col-sm-9">
+			<div class="box box-primary">
+			<div class="box-body no-padding">
+				<div class="nav-tabs-custom">
+							<ul class="nav nav-tabs">
+								<li id="application" class="active"><a href="" data-target="#calendarTab" data-toggle="tab" data-translate="" class="ng-scope text-bold">ตารางเวร</a></li>
+								<li id="coverage" class=""><a href="" data-target="#changeWorkTab" data-toggle="tab" data-translate="" class="ng-scope text-bold">แลกเวร</a></li>
+							</ul>
+							<!-- #################################### Application Details Tab ################################# -->
+							<div class="tab-content">
+								<div class="tab-pane active" id="calendarTab">
+									<div id="calendar"></div>
+								</div><!-- Application Details Tab -->
+								<!-- Coverage Tab -->
+								<div class="tab-pane" id="changeWorkTab">
+									<div class="box  bg-blue">
+						              <div class="box-header">
+						                <i class="fa fa-refresh"></i>
+						                <h3 class="box-title">Change Working</h3>
+						                <!-- tools box -->
+						                <div class="box-tools pull-right">
+						                  <button class="btn btn-xs btn-success" data-ng-disabled="!swop.daySecond" data-ng-click="saveSwap()">
+						                      <i class="fa fa-cloud-upload"></i><span> ส่งคำขอแลกเวร</span>
+						                  </button>
+						                </div>
+						                <!-- /. tools -->
+						              </div>
+						              <!-- /.box-header -->
+						              <!-- /.box-body -->
+						              <div class="box-footer text-black">
+														<div class="row">
+															<div class="col-md-6">
+          											<!-- DIRECT CHAT PRIMARY -->
+											          <div class="box box-primary direct-chat direct-chat-primary">
+											            <div class="box-header with-border">
+											              <h3 class="box-title">Direct Chat</h3>
+																		<span data-toggle="tooltip" title="" class="badge bg-light-blue pull-left" data-original-title="3 New Messages">ผู้ขอแลก</span>
+											            </div>
+											            <!-- /.box-header -->
+											            <div class="box-body">
+											              <!-- Conversations are loaded here -->
+											              <div class="direct-chat-messages">
+											                <!-- Message. Default to the left -->
+											                <div class="direct-chat-msg">
+											                  <div class="direct-chat-info clearfix">
+											                    <span class="direct-chat-name pull-left text-blue">{{userObj.Pre_name}}{{userObj.Mem_name}} {{userObj.Mem_lastname}}</span>
+											                  </div>
+											                  <!-- /.direct-chat-info -->
+											                  <img class="direct-chat-img" ng-src="jcrop/upload_pic/{{userObj.PICTURE}}" alt="Message User Image"><!-- /.direct-chat-img -->
+											                  <div class="direct-chat-text">
+											                     {{userObj.POSITION}}
+											                  </div>
+											                  <!-- /.direct-chat-text -->
+											                </div>
+											                <!-- /.direct-chat-msg -->
+
+											                <!-- Message to the right -->
+											                <div class="direct-chat-msg">
+																				<div class="row form-group">
+																					<label class="col-sm-3 text-inline"><strong>ปี :</strong></label>
+																					<div class="col-sm-9">
+															                  <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="swop.yearRequestSwop" data-ng-click="getMonthSwop(userObj.Mem_ID,swop.yearRequestSwop)">
+															                    <option></option>
+															                    <option data-ng-repeat="yl in userYearList"   value="{{yl.schd_year}}">
+															                         {{yl.schd_year}}
+															                    </option>
+															                  </select>
+															            </div>
+
+																				</div>
+											                  <!-- /.direct-chat-info -->
+																				<div class="row form-group" data-ng-show="swop.yearRequestSwop">
+																					<label class="col-sm-3 text-inline"><strong>เดือน :</strong></label>
+																					<div class="col-sm-9">
+															                  <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="swop.monthRequestSwop" data-ng-click="getChangeWorkList()" >
+															                    <option></option>
+															                    <option data-ng-repeat="ml in userMonthList"   value="{{ml}}">
+															                         {{ml.lov_name}}
+															                    </option>
+															                  </select>
+															            </div>
+
+																				</div>
+
+																				<div class="row form-group" data-ng-show="swop.monthRequestSwop">
+																					<label class="col-sm-3 text-inline"><strong>วัน :</strong></label>
+																					<div class="col-sm-9">
+															                  <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="swop.dayFist" >
+															                    <option></option>
+															                    <option data-ng-repeat="dl in dayFirstList" data-ng-disabled="dl.dis"  value="{{dl}}">
+															                         ที่ {{dl.data.t_day_no}} วัน{{dl.dt}} ( {{dl.data.wl_name}} )
+															                    </option>
+															                  </select>
+															            </div>
+																				</div>
+
+																				<div class="row form-group" data-ng-show="swop.monthRequestSwop">
+																					<label class="col-sm-3 text-inline"><strong>เหตุผล :</strong></label>
+																					<div class="col-sm-9">
+																								<textarea name="name" class="form-control input-xs" rows="3" cols="100" data-ng-model="swop.reason"></textarea>
+																					</div>
+																				</div>
+
+
+
+
+											                  <!-- /.direct-chat-text -->
+											                </div>
+											                <!-- /.direct-chat-msg -->
+											              </div>
+
+
+											              <!--/.direct-chat-messages-->
+
+											              <!-- Contacts are loaded here -->
+
+											              <!-- /.direct-chat-pane -->
+											            </div>
+											            <!-- /.box-body -->
+
+											            <!-- /.box-footer-->
+											          </div>
+          												<!--/.direct-chat -->
+        											</div>
+															<div class="col-md-6">
+          											<!-- DIRECT CHAT PRIMARY -->
+											          <div class="box box-success direct-chat direct-chat-success" >
+											            <div class="box-header with-border">
+											              <h3 class="box-title">Direct Chat</h3>
+																		<span data-toggle="tooltip" title="" class="badge bg-green pull-left" data-original-title="3 New Messages">ผู้ให้แลก</span>
+
+											              <div class="box-tools pull-right">
+
+											                </button>
+											                <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-widget="chat-pane-toggle" data-original-title="Contacts">
+											                  <i class="fa fa-user-circle-o"></i>
+																			</button>
+											              </div>
+											            </div>
+											            <!-- /.box-header -->
+											            <div class="box-body">
+											              <!-- Conversations are loaded here -->
+											              <div class="direct-chat-messages">
+											                <!-- Message. Default to the left -->
+											                <div class="direct-chat-msg right">
+											                  <div class="direct-chat-info clearfix">
+											                    <span class="direct-chat-name pull-left text-green">{{userProvideObj.Pre_name}}{{userProvideObj.Mem_name}} {{userProvideObj.Mem_lastname}}</span>
+																					<br>
+											                  </div>
+											                  <!-- /.direct-chat-info -->
+											                  <img class="direct-chat-img pointer" ng-src="jcrop/upload_pic/{{userProvideObj.PICTURE}}" alt="Message User Image" data-ng-show="userProvideObj" data-widget="chat-pane-toggle"><!-- /.direct-chat-img -->
+																				<img class="direct-chat-img pointer" ng-src="img/avatar/avatar_unknow.jpg" alt="Message User Image" data-ng-hide="userProvideObj" data-widget="chat-pane-toggle"><!-- /.direct-chat-img -->
+
+											                  <div class="direct-chat-text" data-ng-show="userProvideObj">
+											                     {{userProvideObj.Position_Name}}
+											                  </div>
+																				<div class="direct-chat-text" data-ng-hide="userProvideObj" data-widget="chat-pane-toggle">
+											                     กรุณาเลือก
+											                  </div>
+											                  <!-- /.direct-chat-text -->
+											                </div>
+											                <!-- /.direct-chat-msg -->
+											                <!-- Message to the right -->
+											                <div class="direct-chat-msg">
+																				<div class="row form-group" >
+																					<label class="col-sm-3 text-inline"><strong>ปี :</strong></label>
+																					<div class="col-sm-9">
+															                  <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="swop.yearProvide" data-ng-click="provideSelectYear()">
+															                    <option></option>
+															                    <option data-ng-repeat="upyl in userProvideYearList"   value="{{upyl.schd_year}}">
+															                         {{upyl.schd_year}}
+															                    </option>
+															                  </select>
+															            </div>
+																				</div>
+											                  <!-- /.direct-chat-info -->
+																				<div class="row form-group" data-ng-show="swop.yearProvide">
+																					<label class="col-sm-3 text-inline"><strong>เดือน :</strong></label>
+																					<div class="col-sm-9">
+															                  <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="swop.monthProvide" data-ng-click="provideSelectMonth()">
+															                    <option></option>
+															                    <option data-ng-repeat="upml in userProvideMonthList"   value="{{upml.schd_month}}">
+															                         {{upml.lov_name}}
+															                    </option>
+															                  </select>
+															            </div>
+																				</div>
+
+																				<div class="row form-group" data-ng-show="swop.monthProvide">
+																					<label class="col-sm-3 text-inline"><strong>วัน :</strong></label>
+																					<div class="col-sm-9">
+															                  <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="swop.daySecond" >
+															                    <option></option>
+															                    <option data-ng-repeat="dl in daySecondList" data-ng-disabled="dl.dis"  value="{{dl}}">
+															                         ที่ {{dl.data.t_day_no}} วัน{{dl.dt}} ( {{dl.data.wl_name}} )
+															                    </option>
+															                  </select>
+															            </div>
+																				</div>
+
+
+											                  <!-- /.direct-chat-text -->
+											                </div>
+											                <!-- /.direct-chat-msg -->
+											              </div>
+											              <!--/.direct-chat-messages-->
+
+											              <!-- Contacts are loaded here -->
+
+											              <div class="direct-chat-contacts">
+																			<select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="swop.depUser" data-ng-click="depProvide(swop.depUser)">
+																				<option></option>
+																				<option data-ng-repeat="dl in depProvideList"  value="{{dl.schd_ward_id}}">
+																						 {{dl.Cost_name}}
+																				</option>
+																			</select>
+											                <ul class="contacts-list">
+											                  <li  data-widget="chat-pane-toggle" data-ng-click="provide(cwl.Mem_ID)" data-ng-repeat="cwl in changeWorkList">
+											                    <a href="">
+											                      <img class="contacts-list-img" ng-src="jcrop/upload_pic/{{cwl.PICTURE}}" alt="User Image">
+
+											                      <div class="contacts-list-info">
+											                            <span class="contacts-list-name">
+											                              {{cwl.Mem_name}}  {{cwl.Mem_lastname}}
+											                              <small class="contacts-list-date pull-right">2/28/2015</small>
+											                            </span>
+											                        <span class="contacts-list-msg">{{cwl.Position_Name}}</span>
+											                      </div>
+											                      <!-- /.contacts-list-info -->
+											                    </a>
+											                  </li>
+											                  <!-- End Contact Item -->
+
+											                </ul>
+											                <!-- /.contatcts-list -->
+											              </div>
+											              <!-- /.direct-chat-pane -->
+											            </div>
+											            <!-- /.box-body -->
+
+											            <!-- /.box-footer-->
+											          </div>
+          												<!--/.direct-chat -->
+        											</div>
+															<br>
+															<br>
+															<div class="col-md-12">
+												          <!-- small box -->
+																	<table id="example1" class="table table-bordered table-striped ">
+													          <thead>
+													          <tr>
+													            <th>No.</th>
+													            <th>ผู้ให้แลก</th>
+													            <th>วันที่</th>
+																			<th>สถานะ</th>
+																			<th>Actions</th>
+													          </tr>
+													          </thead>
+													          <tbody>
+													          <tr data-ng-repeat="u in userChangeList">
+													            <td>{{$index+1}}</td>
+														            <td class="text-left">{{u.nd_pname}}{{u.nd_fname}} {{u.nd_lname}}</td>
+																				 <td class="text-center">{{u.cw_date_nd}}-{{u.cw_month_nd}}-{{u.cw_year_nd}}</td>
+																				 <td class="text-center text-{{u.status_color}} text-bold">{{u.status_name}}</td>
+													            <td class="action">
+													              <a href="" data-tooltip="รายละเอียด" data-ng-click="gotoScheduleWard(schl.ID)"><i class="fa  fa-calendar-check-o"></i></a>
+
+													            </td>
+													          </tr>
+													          <tr data-ng-show="userChangeList == '' || userChangeList == undefined">
+													                <td colspan="5" data-translate>ไม่มีข้อมูล</td>
+													          </tr>
+													          </tbody>
+													          <tfoot>
+													          <tr>
+																			<th>No.</th>
+													            <th>ผู้ให้แลก</th>
+													            <th>วันที่</th>
+																			<th>สถานะ</th>
+																			<th>Actions</th>
+													          </tr>
+													          </tfoot>
+													        </table>
+
+															</div>
+														</div>
+
+
+						                <!-- /.row -->
+
+						              </div>
+
+						        </div>
+
+								</div><!-- Coverage Tab -->
+								<!-- Premium Tab -->
+								<div class="tab-pane " id="leaveTab">
+									aaaa
+									</div><!-- row 1 -->
+
+
+
+
+								</div><!-- Premium/Payment Tab -->
+							</div>
+
+			</div>
+		</div>
+		</div>
+
+
+				</div>
+
+</div>
+	<!-- /.row (main row) -->
+</section>

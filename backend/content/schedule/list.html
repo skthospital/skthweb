@@ -1,0 +1,88 @@
+<section class="content-header">
+  <h1>
+    <i class="fa fa-th"></i> ตารางปฏิบัติงาน
+    <small>advanced tables</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#/"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
+    <li><a href=""><i class="fa fa-th"></i> ตารางปฏิบัติงาน</a></li>
+    <li class="active"><i class="fa fa-table"></i> ตารางทั้งหมด</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- /.box -->
+
+      <div class="box  bg-blue">
+              <div class="box-header">
+                <i class="fa fa-search"></i>
+                <h3 class="box-title">Search Criteria</h3>
+                <!-- tools box -->
+
+                <div class="box-tools pull-right">
+                  <button class="btn btn-xs btn-success" data-ng-click="gotoCreate()">
+                      <i class="fa fa-calendar-plus-o"></i><span> Create</span>
+                  </button>
+
+                </div>
+                <!-- /. tools -->
+              </div>
+              <!-- /.box-header -->
+              <!-- /.box-body -->
+              <div class="box-footer text-black">
+
+                <!-- /.row -->
+              </div>
+        </div>
+      <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped ">
+          <thead>
+          <tr>
+            <th>No.</th>
+            <th>Ward</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr data-ng-repeat="schl in scheduleList">
+            <td>{{paging.showing.start+$index}}</td>
+            <td class="text-left">{{schl.WARDNAME}} ( {{schl.WARDCOMMONNAME}} )</td>
+            <td class="action">
+              <a href="" data-tooltip="รายละเอียด" data-ng-click="gotoScheduleWard(schl.ID)"><i class="fa  fa-calendar-check-o"></i></a>
+
+            </td>
+          </tr>
+          <tr data-ng-show="scheduleList == '' || scheduleList == undefined">
+                <td colspan="5" data-translate>ไม่มีข้อมูล</td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <th>No.</th>
+            <th>Ward</th>
+            <th>Actions</th>
+          </tr>
+          </tfoot>
+        </table>
+        <div class="row">
+             <div class="col-sm-4">
+              </div>
+              <div class="col-sm-4">
+                    <div class="dataTables_info">Showing {{paging.showing.start}} to {{paging.showing.end}} of {{paging.showing.total}} entries</div>
+              </div>
+              <div class="col-sm-4">
+                <div class="dataTables_paginate paging_bootstrap">
+                  <div data-pagination data-total-items="paging.totalItems" data-items-per-page="paging.limit" data-page="paging.pageNumber" data-max-size="5" data-boundary-links="true" data-on-select-page="selectPage(page)"></div>
+                </div>
+              </div>
+        </div>
+
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>

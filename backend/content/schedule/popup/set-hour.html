@@ -1,0 +1,83 @@
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel()"><span
+                data-aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <span lang="En"  style="color: green; font-size: 24px; font-weight: bold; line-height: 30px;">ตั้งค่าอัตราเงินค่าตอบแทนรายชั่วโมง</span>&nbsp;&nbsp;
+
+    </div>
+    <div class="modal-body">
+        <!-- ############# Content Of reserv ################## -->
+        <div class="row">
+          <div class="col-sm-10">
+              <label class="col-sm-3 text-inline"><strong>ผู้ปฏิบัติงาน :</strong></label>
+
+              <div class="col-sm-7 text-inline">
+                <label class="text-inline">{{userObj.Pre_name}}{{userObj.Mem_name}}  {{userObj.Mem_lastname}}</label>
+              </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-10">
+              <label class="col-sm-3 text-inline"><strong>ตำแหน่ง :</strong></label>
+
+              <div class="col-sm-7 text-inline">
+                <label class="text-inline">{{userObj.Position_Name}}</label>
+              </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-10">
+              <label class="col-sm-3 text-inline"><strong>ปฏิบัติงาน :</strong></label>
+
+              <div class="col-sm-7 text-inline">
+                <label class="text-inline">{{wardObj.Cost_name}}</label>
+              </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-10">
+              <label class="col-sm-3 text-inline"><strong>ประจำเดือน :</strong></label>
+
+              <div class="col-sm-7 text-inline">
+                <label class="text-inline">{{monthObj.lov_name}} ปี {{year}}</label>
+              </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-10">
+              <label class="col-sm-3 text-inline"><strong>ค่าตอบแทน :</strong></label>
+
+              <div class="col-sm-7 text-inline">
+                <label class="text-inline">{{userObj.Position_OTRate}} บาท / 8 ชั่วโมง = {{txt}} {{total}} บาท</label>
+              </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-10">
+              <label class="col-sm-3 text-inline"><strong>ชั่วโมงละ :</strong></label>
+
+              <div class="col-sm-7 text-inline">
+                <input type="text" class="form-control input-xs" data-ng-model="criteria.hour">
+              </div>
+
+          </div>
+        </div>
+        </div>
+        <!-- <pre>{{getSubj | json}}</pre> -->
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-success btn-xs" data-dismiss="modal" data-ng-click="save()" >
+              <i class="fa fa-check-circle"></i>&nbsp;&nbsp;<span data-translate>บันทึก</span>
+          </button>
+          <button type="button" class="btn btn-warning btn-xs" data-dismiss="modal" data-ng-click="cancel()">
+              <i class="fa fa-times"></i>&nbsp;&nbsp;<span data-translate>ยกเลิก</span>
+          </button>
+
+        </div>
+    </div>

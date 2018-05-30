@@ -1,0 +1,90 @@
+<section class="content-header">
+  <h1>
+    ตารางปฏิบัติงาน
+    <small>Data Tables</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#/"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
+    <li><a href="">ตารางปฏิบัติงาน</a></li>
+    <li class="active">ตารางทั้งหมด</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- /.box -->
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">ข้อมูลช่วงเวลาปฏิบัติงาน</h3>
+          <div class="box-tools pull-right">
+          <button class="btn btn-xs btn-success" data-ng-click="beforeSave()">
+              <i class="fa fa-fw fa-save"></i><span> บันทึก</span>
+          </button>
+
+          <button class="btn btn-xs btn-warning" data-ng-click="back()">
+              <i class="fa fa-fw fa-mail-reply"></i><span> กลับ</span>
+          </button>
+        </div>
+        </div>
+
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row form-group">
+								<div class="col-sm-6">
+									<label class="col-sm-4 text-inline">ชื่อผู้ปฏิบัติงาน :</label>
+									<div class="col-sm-8">
+										<input class="form-control input-xs" name="fullName" type="text" data-ng-model="criteria.fullName" data-ng-disabled="true" required>
+										<!--<span class="help-block-error" data-ng-show="isSubmit && form.userCode.$error.required">Required!</span>-->
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<label class="col-sm-4 text-inline">ปฏิบัติงาน :</label>
+									<div class="col-sm-8">
+                    <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.workVal">
+                        <option></option>
+                        <option data-ng-repeat="t in workList"   value="{{t.wl_id}}">
+                            {{t.wl_name}}  <i class="{{t.wl_icon}}"></i>
+                        </option>
+                    </select>
+                    <span class="help-block-error" data-ng-show="error.errorWork">กรุณาเลือก !</span>
+									</div>
+								</div>
+
+
+							</div>
+              <div class="row form-group">
+								<div class="col-sm-6">
+									<label class="col-sm-4 text-inline">วันที่เริ่มต้น :</label>
+									<div class="col-sm-8">
+										<div class='input-group date' data-datepicker
+											data-ng-model="criteria.date_f" id="coverDate" >
+											<input type='text' class="form-control input-xs col-xs-6" required readonly="true">
+											<span class="input-group-addon"  ><i class="fa fa-calendar"></i></span>
+										</div>
+										<span class="help-block-error" data-ng-show="error.errorDateF">กรุณาเลือก !</span>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<label class="col-sm-4 text-inline">วันที่สิ้นสุด :</label>
+									<div class="col-sm-8">
+										<div class='input-group date' data-datepicker
+											data-ng-model="criteria.date_t" id="coverDate">
+											<input type='text' class="form-control input-xs col-xs-6" required readonly="true">
+											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+										</div>
+										<span class="help-block-error" data-ng-show="error.errorDateT">กรุณาเลือก !</span>
+									</div>
+								</div>
+							</div>
+
+
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>

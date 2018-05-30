@@ -1,0 +1,127 @@
+<section class="content-header">
+  <h1>
+    รายการหอผู้ป่วยทั้งหมด
+    <small>advanced tables</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#/"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
+    <li><a href="">จัดการข้อมูล</a></li>
+    <li class="active">รายการตำแหน่งทั้งหมด</li>
+  </ol>
+</section>
+
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- /.box -->
+
+
+        <div class="box  bg-blue">
+        				<div class="box-header">
+        					<i class="fa fa-search"></i>
+        					<h3 class="box-title">Search Criteria</h3>
+        					<!-- tools box -->
+                  <div class="box-tools pull-right">
+      				        <button class="btn btn-xs btn-primary" data-ng-click="search()">
+      					             <i class="fa fa-search"></i><span>Search</span>
+      				        </button>
+      				        <button class="btn btn-xs btn-warning" data-ng-click="clear()">
+      					             <i class="fa fa-times"></i><span>Clear</span>
+      				        </button>
+      			      </div>
+        					<!-- /. tools -->
+        				</div>
+        				<!-- /.box-header -->
+        				<!-- /.box-body -->
+        				<div class="box-footer text-black">
+                  <div class="row form-group">
+            			<div class="col-sm-4">
+            					<label class="col-sm-3">Name :</label>
+            					<div class="col-sm-7">
+            						<input type="text" class="form-control input-xs" data-ng-model="criteria.w_name">
+            					</div>
+            				</div>
+            				<div class="col-sm-4">
+            					<label class="col-sm-5">Building :</label>
+            					<div class="col-sm-7">
+            						<input type="text" class="form-control input-xs" data-ng-model="criteria.w_build_name">
+            					</div>
+            				</div>
+            				<div class="col-sm-4">
+            					<label class="col-sm-5 text-inline">Common :</label>
+                      <div class="col-sm-7">
+            						<input type="text" class="form-control input-xs" data-ng-model="criteria.w_nick_name">
+            					</div>
+            				</div>
+            			</div>
+        					<!-- /.row -->
+        				</div>
+        	</div>
+      </div>
+  </div>
+        <button class="btn btn-xs btn-success" data-ng-click="gotoCreate()">
+            <i class="fa fa-plus-circle"></i><span> Create</span>
+        </button>
+
+
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example1" class="table table-bordered table-striped ">
+            <thead>
+            <tr>
+              <th width="5%"  >#</th>
+              <th >Name</th>
+              <th >Building Name</th>
+              <th >Common Name</th>
+
+              <th >Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="wl in wardList">
+              <td>{{$index+1}}</td>
+              <td class="text-left">{{wl.DEPARTMENTNAME}}</td>
+              <td class="text-left">{{wl.BUILDNAME}}</td>
+              <td class="text-left">{{wl.SHORTNAME}}</td>
+              <td class="action">
+                <a href="" data-ng-click="gotoEdit(wl.ID)"><i class="fa fa-fw fa-edit"></i></a>
+                <a href="" data-ng-click="delete(wl.ID)"><i class="fa fa-fw fa-trash-o"></i></a>
+              </td>
+            </tr>
+            <tr data-ng-show="wardList == '' || wardList == undefined">
+                  <td colspan="5" data-translate>ไม่มีข้อมูล</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>#</th>
+              <th >Name</th>
+              <th >Building Name</th>
+              <th >Common Name</th>
+              <th >Actions</th>
+            </tr>
+            </tfoot>
+          </table>
+          <div class="row">
+               <div class="col-sm-4">
+                </div>
+                <div class="col-sm-4">
+                      <div class="dataTables_info">Showing {{paging.showing.start}} to {{paging.showing.end}} of {{paging.showing.total}} entries</div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="dataTables_paginate paging_bootstrap">
+                    <div data-pagination data-total-items="paging.totalItems" data-items-per-page="paging.limit" data-page="paging.pageNumber" data-max-size="5" data-boundary-links="true" data-on-select-page="selectPage(page)"></div>
+                  </div>
+                </div>
+          </div>
+        </div>
+
+        <!-- /.box-body -->
+
+      <!-- /.box -->
+
+    <!-- /.col -->
+
+  <!-- /.row -->
+</section>

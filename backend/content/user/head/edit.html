@@ -1,0 +1,120 @@
+<section class="content-header">
+  <h1>
+    General Form Elements
+    <small>Preview</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
+    <li><a href="#">จัดการข้อมูล</a></li>
+    <li class="active">แก้ได้หอผู้ป่วย</li>
+
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <!-- right column -->
+    <div class="col-md-12">
+      <!-- Horizontal Form -->
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title" >Edit Form</h3>
+          <div class="box-tools pull-right">
+
+              <button class="btn btn-xs btn-success" data-ng-click="edit()">
+                     <i class="fa fa-fw fa-edit"></i><span>Edit</span>
+              </button>
+
+              <button class="btn btn-xs btn-warning" data-ng-click="back()">
+                     <i class="fa fa-fw fa-mail-reply"></i><span>Back</span>
+              </button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">คำนำหน้าชื่อ :</label>
+
+              <div class="col-sm-8">
+                  <input type="text" class="form-control input-xs"  placeholder="คำนำหน้าชื่อ" data-ng-model="criteria.preName" required>
+                <span class="help-block-error" data-ng-show="err.nameErr">is required !</span>
+
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">ชื่อจริง :</label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control input-xs" placeholder="ชื่อจริง" data-ng-model="criteria.firstName" required>
+                <span class="help-block-error" data-ng-show="err.buildNameErr">is required !</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputPassword3" class="col-sm-2 control-label">นามสกุล :</label>
+
+              <div class="col-sm-8">
+                <input type="text" class="form-control input-xs" id="inputPassword3" placeholder="นามสกุล" data-ng-model="criteria.lastName" required>
+                <span class="help-block-error" data-ng-show="err.nickErr">is required !</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">ตำแหน่ง :</label>
+
+              <div class="col-sm-8">
+                <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.position">
+                    <option></option>
+                    <option data-ng-repeat="p in positionList"    value="{{p.Position_ID}}">
+                        {{p.Position_Name}}
+                    </option>
+                </select>
+                <span class="help-block-error" data-ng-show="err.nameErr">is required !</span>
+
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">หน่วยงาน :</label>
+
+              <div class="col-sm-8">
+                <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.department" data-ng-disabled="true">
+                    <option></option>
+                    <option data-ng-repeat="depl in departmentList"   value="{{depl.Cost_id}}">
+                        {{depl.Cost_name}}
+                    </option>
+                </select>
+                <span class="help-block-error" data-ng-show="err.nameErr">is required !</span>
+
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">สิทธิ์เข้าใช้ระบบ :</label>
+
+              <div class="col-sm-8">
+                <select class="form-control input-xs"  data-ui-select2="{'containerCssClass': 'required'}"   data-ng-model="criteria.role">
+                    <option></option>
+                    <option data-ng-repeat="r in roleList"    value="{{r.lov_value}}">
+                        {{r.lov_name}}
+                    </option>
+                </select>
+                <span class="help-block-error" data-ng-show="err.nameErr">is required !</span>
+
+              </div>
+            </div>
+          </div>
+          <!-- /.box-body -->
+
+          <!-- /.box-footer -->
+        </form>
+      </div>
+      <!-- /.box -->
+      <!-- general form elements disabled -->
+
+      <!-- /.box -->
+    </div>
+    <!--/.col (right) -->
+  </div>
+  <!-- /.row -->
+</section>

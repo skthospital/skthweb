@@ -1,0 +1,981 @@
+<section class="content-header">
+  <h1>
+    <i class="fa fa-th"></i> ตารางปฏิบัติงาน
+    <small>advanced tables</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#/"><i class="fa fa-dashboard"></i> หน้าแรก</a></li>
+    <li><a href=""><i class="fa fa-th"></i> ตารางปฏิบัติงาน</a></li>
+    <li class="active"><i class="fa fa-table"></i> ตารางทั้งหมด</li>
+  </ol>
+</section>
+
+<section class="content">
+
+  <div class="row">
+    <div class="col-xs-12">
+
+      <!-- /.box -->
+      <!-- <div class="box">
+        <div class="box-header">
+          <h3 class="box-title text-center">ตารางปฎิบัติงาน {{schObj.WARDNAME}} ประจำเดือน{{schObj.MONTH}} ปี {{schObj.YEAR_B}}</h3>
+        </div>
+      </div> -->
+
+
+      <div class="callout">
+        <div class="row">
+        <div class="col-md-8" data-ng-hide="httpRequestTracker.hasPendingRequests()">
+          <div class="info-box bg-blue">
+            <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+
+            <div class="info-box-content">
+
+              <span class="info-box-number">ตารางปฎิบัติงาน {{schObj.WARDNAME}}</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+                  <span class="progress-description">
+                    ประจำเดือน{{schObj.MONTH}} ปี {{schObj.YEAR_B}}
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-4">
+          <div class="info-box bg-{{setBackupColor}}" data-ng-hide="httpRequestTracker.hasPendingRequests()">
+            <span class="info-box-icon"><i class="fa {{setBackupIcon}}"></i></span>
+
+            <div class="info-box-content">
+
+              <span class="info-box-number">บันทึกตารางเวรต้นเดือน</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 100%"></div>
+              </div>
+                  <span class="progress-description">
+                    {{setBackupStatus}}
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- /.col -->
+      </div>
+
+      </div>
+      <div class="callout">
+        <div class="box-tools pull-right">
+
+            <button class="btn btn-xs btn-warning" data-ng-click="back()">
+                   <i class="fa fa-fw fa-mail-reply"></i><span>กลับ</span>
+            </button>
+        </div>
+        <button class="btn btn-xs btn-success" data-ng-click="addUser()">
+               <i class="fa fa-fw fa-plus-circle"></i><span>เพิ่มผู้ปฏิบัติงาน</span>
+        </button>
+        <button class="btn btn-xs btn-success" data-ng-click="saveTemp()" data-ng-show="checkBackupObj.c == 0">
+            <i class="fa fa-share-alt-square"></i><span>บันทึกตารางเวร</span>
+        </button>
+        <button class="btn btn-xs btn-success" data-ng-click="gotoApprove()">
+               <i class="fa fa-check-circle"></i><span>ผู้อนุมัติ</span>
+        </button>
+        <button class="btn btn-xs btn-success" data-ng-click="saveSeq()">
+               <i class="fa fa-sort-numeric-asc"></i><span>บันทึกลำดับ</span>
+        </button>
+
+
+        <div class="btn-group" >
+                  <button class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" >
+                    <i class="fa fa-file-pdf-o"></i><span>รายงาน</span>
+                  </button>
+                  <button  class="btn btn-info btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="min-width: 1px">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li>
+                      <a href="" data-ng-click="gotoReport(1)"><i class="fa fa-file-archive-o"></i> รายงานตารางเวร</a>
+                    </li>
+                    <li>
+                      <a href="" data-ng-click="gotoReport(2)"><i class="fa fa-file-pdf-o"></i> รายงานขออนุมัติปฏิบัติงาน</a>
+                    </li>                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="" data-ng-click="gotoEarly()">รายงานตารางเวรต้นเดือน</a></li>
+                  </ul>
+        </div>
+
+      </div>
+
+
+
+        <div class="row form-group callout">
+            <div class="dataTables_wrapper table-responsive">
+                <table  data-search="search" ui-tree class="table table-bordered table-condensed table-striped table-hover dataTable" data-ng-hide="httpRequestTracker.hasPendingRequests()">
+                    <thead>
+                    <tr>
+                        <th rowspan="2" colspan="4"  width="3%">ที่</th>
+                        <th rowspan="2" width="40%">ชื่อ - สกุล</th>
+                        <th rowspan="2" width="20%">ตำแหน่ง</th>
+                        <th colspan="2" width="15%" nowrap>อัตราเงินตอบแทน</th>
+                        <th colspan="{{monthTotal}}">วันที่ขึ้นปฏิบัติงาน</th>
+                        <th colspan="3" width="20%">จำนวนเวร</th>
+                        <th rowspan="2" width="20%">เงิน</th>
+                    </tr>
+                    <tr>
+                        <th>ผลัด</th>
+                        <th>OT</th>
+                        <th>01</th>
+                        <th>02</th>
+                        <th>03</th>
+                        <th>04</th>
+                        <th>05</th>
+                        <th>06</th>
+                        <th>07</th>
+                        <th>08</th>
+                        <th>09</th>
+                        <th>10</th>
+                        <th>11</th>
+                        <th>12</th>
+                        <th>13</th>
+                        <th>14</th>
+                        <th>15</th>
+                        <th>16</th>
+                        <th>17</th>
+                        <th>18</th>
+                        <th>19</th>
+                        <th>20</th>
+                        <th>21</th>
+                        <th>22</th>
+                        <th>23</th>
+                        <th>24</th>
+                        <th>25</th>
+                        <th>26</th>
+                        <th>27</th>
+                        <th>28</th>
+                        <th data-ng-show="monthTotal > 28">29</th>
+                        <th data-ng-show="monthTotal > 29">30</th>
+                        <th data-ng-show="monthTotal > 30">31</th>
+                        <th nowrap>บ , ด</th>
+                        <th>OT</th>
+                        <th>ค้าง</th>
+                    </tr>
+                    </thead>
+                    <tbody ui-tree-nodes  ng-model="criteria.personalList">
+                       <!-- data-ng-dblclick="delete(psnl.Mem_ID)" -->
+                      <tr data-ng-repeat="psnl in criteria.personalList" ui-tree-node  >
+                          <td>{{$index+1}}</td>
+                        <td>
+                          <i class="fa {{psnl.icon}} text-{{psnl.colorIcon}}"  data-ng-show="checkBackupObj.c == 0"></i>
+                          <i class="fa {{psnl.icon}} text-{{psnl.colorIcon}} pointer" data-ng-click="trade($index,psnl.colorIcon)" data-tooltip="คลิกเพื่อแลกเวร" data-ng-show="checkBackupObj.c != 0"></i>
+                        </td>
+                        <td><i class="glyphicon glyphicon-resize-vertical" ui-tree-handle></i></td>
+                        <td><a href="" data-tooltip="ลบ" data-ng-click="delete(psnl.Mem_ID)"><i class="fa fa-trash-o"></i></a></td>
+
+                        <td class="text-left" nowrap>
+                          <a href="" data-ng-click="createData(psnl.Mem_ID,schObj.COSTID)" data-tooltip="คลิกเพื่อเปลี่ยนมุมมองแบบปฏิทิน">{{psnl.Pre_name}}{{psnl.Mem_name}}  {{psnl.Mem_lastname}} </a>
+                        </td>
+                        <td class="text-left" nowrap ><span data-tooltip="{{psnl.Position_Name}}">{{psnl.Position_Initals}}</span></td>
+                        <td class="text-right" >{{psnl.Position_NRate}}</td>
+                        <td class="text-right text-red" ><a href="" style="color:red" data-ng-click="setHour(psnl.Mem_ID,psnl.schd_month,psnl.schd_year,psnl.schd_ward_id,psnl.schd_mphr)" data-tooltip="คลิกเพื่อตั้งค่าเงินรายชั่วโมง">{{psnl.Position_OTRate}}</a></td>
+                        <td data-ng-dblclick="td(01,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)"  style="cursor:alias;background-color:{{color1}}" nowrap>
+                          <label class="text-{{psnl.schd_d01_m.wl_color}} pointer" data-tooltip="{{psnl.schd_d01_m.wl_name}}"
+                          data-ng-click="wk(01,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d01_m.wl_category,$index)">{{psnl.schd_d01_m.wl_f}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d01_m.wl_hr == 8 ||  psnl.schd_d01_m.wl_hr == 0">{{psnl.schd_d01_m.wl_hr}}</span>
+                          <label class="text-{{psnl.schd_d01_a.wl_color}} pointer" data-tooltip="{{psnl.schd_d01_a.wl_name}}"
+                          data-ng-click="wk(01,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d01_a.wl_category,$index)">{{psnl.schd_d01_a.wl_c}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d01_a.wl_hr == 8 ||  psnl.schd_d01_m.wl_hr == 0">{{psnl.schd_d01_a.wl_hr}}</span>
+                          <label class="text-{{psnl.schd_d01_n.wl_color}} pointer" data-tooltip="{{psnl.schd_d01_n.wl_name}}"
+                          data-ng-click="wk(01,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d01_n.wl_category,$index)">{{psnl.schd_d01_n.wl_b}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d01_n.wl_hr == 8 ||  psnl.schd_d01_m.wl_hr == 0">{{psnl.schd_d01_n.wl_hr}}</span>
+
+                        </td>
+                        <td  data-ng-dblclick="td(02,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color2}}" nowrap>
+                          <label class="text-{{psnl.schd_d02_m.wl_color}} pointer" data-tooltip="{{psnl.schd_d02_m.wl_name}}"
+                          data-ng-click="wk(02,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d02_m.wl_category,$index)">{{psnl.schd_d02_m.wl_f}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d02_m.wl_hr == 8 ||  psnl.schd_d02_m.wl_hr == 0">{{psnl.schd_d02_m.wl_hr}}</span>
+                          <label class="text-{{psnl.schd_d02_a.wl_color}} pointer" data-tooltip="{{psnl.schd_d02_a.wl_name}}"
+                          data-ng-click="wk(02,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d02_a.wl_category,$index)">{{psnl.schd_d02_a.wl_c}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d02_a.wl_hr == 8 ||  psnl.schd_d02_m.wl_hr == 0">{{psnl.schd_d02_a.wl_hr}}</span>
+                          <label class="text-{{psnl.schd_d02_n.wl_color}} pointer" data-tooltip="{{psnl.schd_d02_n.wl_name}}"
+                          data-ng-click="wk(02,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d02_n.wl_category,$index)">{{psnl.schd_d02_n.wl_b}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d02_n.wl_hr == 8 ||  psnl.schd_d02_m.wl_hr == 0">{{psnl.schd_d02_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(03,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)"  style="cursor:alias;background-color:{{color3}}" nowrap>
+                          <label class="text-{{psnl.schd_d03_m.wl_color}} pointer" data-tooltip="{{psnl.schd_d03_m.wl_name}}"
+                          data-ng-click="wk(03,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d03_m.wl_category,$index)">{{psnl.schd_d03_m.wl_f}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d03_m.wl_hr == 8 ||  psnl.schd_d03_m.wl_hr == 0">{{psnl.schd_d03_m.wl_hr}}</span>
+                          <label class="text-{{psnl.schd_d03_a.wl_color}} pointer" data-tooltip="{{psnl.schd_d03_a.wl_name}}"
+                          data-ng-click="wk(03,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d03_a.wl_category,$index)">{{psnl.schd_d03_a.wl_c}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d03_a.wl_hr == 8 ||  psnl.schd_d03_m.wl_hr == 0">{{psnl.schd_d03_a.wl_hr}}</span>
+                          <label class="text-{{psnl.schd_d03_n.wl_color}} pointer" data-tooltip="{{psnl.schd_d03_n.wl_name}}"
+                          data-ng-click="wk(03,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d03_n.wl_category,$index)">{{psnl.schd_d03_n.wl_b}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d03_n.wl_hr == 8 ||  psnl.schd_d03_m.wl_hr == 0">{{psnl.schd_d03_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(04,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color4}}"  nowrap>
+                          <label class="text-{{psnl.schd_d04_m.wl_color}} pointer" data-tooltip="{{psnl.schd_d04_m.wl_name}}"
+                          data-ng-click="wk(04,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d04_m.wl_category,$index)">{{psnl.schd_d04_m.wl_f}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d04_m.wl_hr == 8 ||  psnl.schd_d04_m.wl_hr == 0">{{psnl.schd_d04_m.wl_hr}}</span>
+                          <label class="text-{{psnl.schd_d04_a.wl_color}} pointer" data-tooltip="{{psnl.schd_d04_a.wl_name}}"
+                          data-ng-click="wk(04,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d04_a.wl_category,$index)">{{psnl.schd_d04_a.wl_c}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d04_a.wl_hr == 8 ||  psnl.schd_d04_m.wl_hr == 0">{{psnl.schd_d04_a.wl_hr}}</span>
+                          <label class="text-{{psnl.schd_d04_n.wl_color}} pointer" data-tooltip="{{psnl.schd_d04_n.wl_name}}"
+                          data-ng-click="wk(04,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d04_n.wl_category,$index)">{{psnl.schd_d04_n.wl_b}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d04_n.wl_hr == 8 ||  psnl.schd_d04_m.wl_hr == 0">{{psnl.schd_d04_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(05,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color5}}" nowrap>
+                          <label class="text-{{psnl.schd_d05_m.wl_color}} pointer" data-tooltip="{{psnl.schd_d05_m.wl_name}}"
+                          data-ng-click="wk(05,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d05_m.wl_category,$index)">{{psnl.schd_d05_m.wl_f}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d05_m.wl_hr == 8 ||  psnl.schd_d05_m.wl_hr == 0">{{psnl.schd_d05_m.wl_hr}}</span>
+                          <label class="text-{{psnl.schd_d05_a.wl_color}} pointer" data-tooltip="{{psnl.schd_d05_a.wl_name}}"
+                          data-ng-click="wk(05,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d05_a.wl_category,$index)">{{psnl.schd_d05_a.wl_c}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d05_a.wl_hr == 8 ||  psnl.schd_d05_m.wl_hr == 0">{{psnl.schd_d05_a.wl_hr}}</span>
+                          <label class="text-{{psnl.schd_d05_n.wl_color}} pointer" data-tooltip="{{psnl.schd_d05_n.wl_name}}"
+                          data-ng-click="wk(05,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d05_n.wl_category,$index)">{{psnl.schd_d05_n.wl_b}}</label>
+                          <span class="hr" data-ng-hide="psnl.schd_d05_n.wl_hr == 8 ||  psnl.schd_d05_m.wl_hr == 0">{{psnl.schd_d05_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(06,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color6}}" nowrap>
+                          <label class="text-{{psnl.schd_d06_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d06_m.wl_name}}"
+                          data-ng-click="wk(06,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d06_m.wl_category,$index)">{{psnl.schd_d06_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d06_m.wl_hr == 8 ||  psnl.schd_d06_m.wl_hr == 0">{{psnl.schd_d06_m.wl_hr}}</span>
+
+
+                          <label
+                          class="text-{{psnl.schd_d06_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d06_a.wl_name}}"
+                          data-ng-click="wk(06,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d06_a.wl_category,$index)">{{psnl.schd_d06_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d06_a.wl_hr == 8 ||  psnl.schd_d06_m.wl_hr == 0">{{psnl.schd_d06_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d06_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d06_n.wl_name}}"
+                          data-ng-click="wk(06,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d06_n.wl_category,$index)">{{psnl.schd_d06_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d06_n.wl_hr == 8 ||  psnl.schd_d06_m.wl_hr == 0">{{psnl.schd_d06_n.wl_hr}}</span>
+
+                        </td>
+                        <td  data-ng-dblclick="td(07,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color7}}" nowrap>
+                          <label class="text-{{psnl.schd_d07_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d07_m.wl_name}}"
+                          data-ng-click="wk(07,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d07_m.wl_category,$index)">{{psnl.schd_d07_m.wl_f}}</label>
+
+                          <span class="hr"
+                          data-ng-hide="psnl.schd_d07_m.wl_hr == 8 ||  psnl.schd_d07_m.wl_hr == 0">{{psnl.schd_d07_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d07_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d07_a.wl_name}}"
+                          data-ng-click="wk(07,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d07_a.wl_category,$index)">{{psnl.schd_d07_a.wl_c}}</label>
+
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d07_a.wl_hr == 8 ||  psnl.schd_d07_m.wl_hr == 0">{{psnl.schd_d07_a.wl_hr}}</span>
+
+
+                          <label class="text-{{psnl.schd_d07_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d07_n.wl_name}}"
+                          data-ng-click="wk(07,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d07_n.wl_category,$index)">{{psnl.schd_d07_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d07_n.wl_hr == 8 ||  psnl.schd_d07_m.wl_hr == 0">{{psnl.schd_d07_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(08,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color8}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d08_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d08_m.wl_name}}"
+                          data-ng-click="wk(08,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d08_m.wl_category,$index)">{{psnl.schd_d08_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d08_m.wl_hr == 8 ||  psnl.schd_d08_m.wl_hr == 0">{{psnl.schd_d08_m.wl_hr}}</span>
+
+                          <label class="text-{{psnl.schd_d08_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d08_a.wl_name}}"
+                          data-ng-click="wk(08,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d08_a.wl_category,$index)">{{psnl.schd_d08_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d08_a.wl_hr == 8 ||  psnl.schd_d08_m.wl_hr == 0">{{psnl.schd_d08_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d08_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d08_n.wl_name}}"
+                          data-ng-click="wk(08,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d08_n.wl_category,$index)">{{psnl.schd_d08_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d08_n.wl_hr == 8 ||  psnl.schd_d08_m.wl_hr == 0">{{psnl.schd_d08_n.wl_hr}}</span>
+
+
+                        </td>
+                        <td  data-ng-dblclick="td(09,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color9}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d09_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d09_m.wl_name}}"
+                          data-ng-click="wk(09,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d09_m.wl_category,$index)">{{psnl.schd_d09_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d09_m.wl_hr == 8 ||  psnl.schd_d09_m.wl_hr == 0">{{psnl.schd_d09_m.wl_hr}}</span>
+
+                          <label class="text-{{psnl.schd_d09_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d09_a.wl_name}}"
+                          data-ng-click="wk(09,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d09_a.wl_category,$index)">{{psnl.schd_d09_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d09_a.wl_hr == 8 ||  psnl.schd_d09_m.wl_hr == 0" >{{psnl.schd_d09_a.wl_hr}}</span>
+
+                          <label class="text-{{psnl.schd_d09_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d09_n.wl_name}}"
+                          data-ng-click="wk(09,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d09_n.wl_category,$index)">{{psnl.schd_d09_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d09_n.wl_hr == 8 ||  psnl.schd_d09_m.wl_hr == 0">{{psnl.schd_d09_n.wl_hr}}</span>
+
+                        </td>
+                        <td  data-ng-dblclick="td(10,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color10}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d10_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d10_m.wl_name}}"
+                          data-ng-click="wk(10,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d10_m.wl_category,$index)">{{psnl.schd_d10_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d10_m.wl_hr == 8 ||  psnl.schd_d10_m.wl_hr == 0">{{psnl.schd_d10_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d10_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d10_a.wl_name}}"
+                          data-ng-click="wk(10,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d10_a.wl_category,$index)">{{psnl.schd_d10_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d10_a.wl_hr == 8 ||  psnl.schd_d10_m.wl_hr == 0" >{{psnl.schd_d10_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d10_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d10_n.wl_name}}"
+                          data-ng-click="wk(10,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d10_n.wl_category,$index)">{{psnl.schd_d10_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d10_n.wl_hr == 8 ||  psnl.schd_d10_m.wl_hr == 0">{{psnl.schd_d10_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(11,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color11}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d11_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d11_m.wl_name}}"
+                          data-ng-click="wk(11,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d11_m.wl_category,$index)">{{psnl.schd_d11_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d11_m.wl_hr == 8 ||  psnl.schd_d11_m.wl_hr == 0">{{psnl.schd_d11_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d11_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d11_a.wl_name}}"
+                          data-ng-click="wk(11,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d11_a.wl_category,$index)">{{psnl.schd_d11_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d11_a.wl_hr == 8 ||  psnl.schd_d11_m.wl_hr == 0" >{{psnl.schd_d11_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d11_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d11_n.wl_name}}"
+                          data-ng-click="wk(11,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d11_n.wl_category,$index)">{{psnl.schd_d11_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d11_n.wl_hr == 8 ||  psnl.schd_d11_m.wl_hr == 0">{{psnl.schd_d11_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(12,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color12}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d12_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d12_m.wl_name}}"
+                          data-ng-click="wk(12,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d12_m.wl_category,$index)">{{psnl.schd_d12_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d12_m.wl_hr == 8 ||  psnl.schd_d12_m.wl_hr == 0">{{psnl.schd_d12_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d12_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d12_a.wl_name}}"
+                          data-ng-click="wk(12,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d12_a.wl_category,$index)">{{psnl.schd_d12_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d12_a.wl_hr == 8 ||  psnl.schd_d12_m.wl_hr == 0" >{{psnl.schd_d12_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d12_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d12_n.wl_name}}"
+                          data-ng-click="wk(12,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d12_n.wl_category,$index)">{{psnl.schd_d12_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d12_n.wl_hr == 8 ||  psnl.schd_d12_m.wl_hr == 0">{{psnl.schd_d12_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(13,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color13}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d13_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d13_m.wl_name}}"
+                          data-ng-click="wk(13,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d13_m.wl_category,$index)">{{psnl.schd_d13_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d13_m.wl_hr == 8 ||  psnl.schd_d13_m.wl_hr == 0">{{psnl.schd_d13_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d13_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d13_a.wl_name}}"
+                          data-ng-click="wk(13,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d13_a.wl_category,$index)">{{psnl.schd_d13_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d13_a.wl_hr == 8 ||  psnl.schd_d13_m.wl_hr == 0" >{{psnl.schd_d13_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d13_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d13_n.wl_name}}"
+                          data-ng-click="wk(13,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d13_n.wl_category,$index)">{{psnl.schd_d13_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d13_n.wl_hr == 8 ||  psnl.schd_d13_m.wl_hr == 0">{{psnl.schd_d13_n.wl_hr}}</span>
+
+                        </td>
+                        <td  data-ng-dblclick="td(14,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color14}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d14_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d14_m.wl_name}}"
+                          data-ng-click="wk(14,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d14_m.wl_category,$index)">{{psnl.schd_d14_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d14_m.wl_hr == 8 ||  psnl.schd_d14_m.wl_hr == 0">{{psnl.schd_d14_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d14_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d14_a.wl_name}}"
+                          data-ng-click="wk(14,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d14_a.wl_category,$index)">{{psnl.schd_d14_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d14_a.wl_hr == 8 ||  psnl.schd_d14_m.wl_hr == 0" >{{psnl.schd_d14_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d14_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d14_n.wl_name}}"
+                          data-ng-click="wk(14,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d14_n.wl_category,$index)">{{psnl.schd_d14_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d14_n.wl_hr == 8 ||  psnl.schd_d14_m.wl_hr == 0">{{psnl.schd_d14_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(15,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color15}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d15_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d15_m.wl_name}}"
+                          data-ng-click="wk(15,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d15_m.wl_category,$index)">{{psnl.schd_d15_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d15_m.wl_hr == 8 ||  psnl.schd_d15_m.wl_hr == 0">{{psnl.schd_d15_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d15_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d15_a.wl_name}}"
+                          data-ng-click="wk(15,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d15_a.wl_category,$index)">{{psnl.schd_d15_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d15_a.wl_hr == 8 ||  psnl.schd_d15_m.wl_hr == 0" >{{psnl.schd_d15_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d15_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d15_n.wl_name}}"
+                          data-ng-click="wk(15,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d15_n.wl_category,$index)">{{psnl.schd_d15_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d15_n.wl_hr == 8 ||  psnl.schd_d15_m.wl_hr == 0">{{psnl.schd_d15_n.wl_hr}}</span>
+
+                        </td>
+                        <td  data-ng-dblclick="td(16,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color16}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d16_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d16_m.wl_name}}"
+                          data-ng-click="wk(16,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d16_m.wl_category,$index)">{{psnl.schd_d16_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d16_m.wl_hr == 8 ||  psnl.schd_d16_m.wl_hr == 0">{{psnl.schd_d16_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d16_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d16_a.wl_name}}"
+                          data-ng-click="wk(16,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d16_a.wl_category,$index)">{{psnl.schd_d16_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d16_a.wl_hr == 8 ||  psnl.schd_d16_m.wl_hr == 0" >{{psnl.schd_d16_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d16_n.wl_color}}"
+                          data-tooltip="{{psnl.schd_d16_n.wl_name}}"
+                          data-ng-click="wk(16,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d16_n.wl_category,$index)">{{psnl.schd_d16_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d16_n.wl_hr == 8 ||  psnl.schd_d16_m.wl_hr == 0">{{psnl.schd_d16_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(17,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color17}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d17_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d17_m.wl_name}}"
+                          data-ng-click="wk(17,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d17_m.wl_category,$index)">{{psnl.schd_d17_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d17_m.wl_hr == 8 ||  psnl.schd_d17_m.wl_hr == 0">{{psnl.schd_d17_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d17_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d17_a.wl_name}}"
+                          data-ng-click="wk(12,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d12_a.wl_category,$index)">{{psnl.schd_d17_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d17_a.wl_hr == 8 ||  psnl.schd_d17_m.wl_hr == 0" >{{psnl.schd_d17_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d17_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d17_n.wl_name}}">{{psnl.schd_d17_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d17_n.wl_hr == 8 ||  psnl.schd_d17_m.wl_hr == 0">{{psnl.schd_d17_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(18,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color18}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d18_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d18_m.wl_name}}"
+                          data-ng-click="wk(18,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d18_m.wl_category,$index)">{{psnl.schd_d18_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d18_m.wl_hr == 8 ||  psnl.schd_d18_m.wl_hr == 0">{{psnl.schd_d18_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d18_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d18_a.wl_name}}"
+                          data-ng-click="wk(18,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d18_a.wl_category,$index)">{{psnl.schd_d18_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d18_a.wl_hr == 8 ||  psnl.schd_d18_m.wl_hr == 0" >{{psnl.schd_d18_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d18_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d18_n.wl_name}}"
+                          data-ng-click="wk(18,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d18_n.wl_category,$index)">{{psnl.schd_d18_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d18_n.wl_hr == 8 ||  psnl.schd_d18_m.wl_hr == 0">{{psnl.schd_d18_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(19,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color19}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d19_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d19_m.wl_name}}"
+                          data-ng-click="wk(19,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d19_m.wl_category,$index)">{{psnl.schd_d19_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d19_m.wl_hr == 8 ||  psnl.schd_d19_m.wl_hr == 0">{{psnl.schd_d19_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d19_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d19_a.wl_name}}"
+                          data-ng-click="wk(19,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d19_a.wl_category,$index)">{{psnl.schd_d19_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d19_a.wl_hr == 8 ||  psnl.schd_d19_m.wl_hr == 0" >{{psnl.schd_d19_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d19_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d19_n.wl_name}}"
+                          data-ng-click="wk(19,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d19_n.wl_category,$index)">{{psnl.schd_d19_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d19_n.wl_hr == 8 ||  psnl.schd_d19_m.wl_hr == 0">{{psnl.schd_d19_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(20,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color20}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d20_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d20_m.wl_name}}"
+                          data-ng-click="wk(20,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d20_m.wl_category,$index)">{{psnl.schd_d20_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d20_m.wl_hr == 8 ||  psnl.schd_d20_m.wl_hr == 0">{{psnl.schd_d20_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d20_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d20_a.wl_name}}"
+                          data-ng-click="wk(20,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d20_a.wl_category,$index)">{{psnl.schd_d20_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d20_a.wl_hr == 8 ||  psnl.schd_d20_m.wl_hr == 0" >{{psnl.schd_d20_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d20_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d20_n.wl_name}}"
+                          data-ng-click="wk(20,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d20_n.wl_category,$index)">{{psnl.schd_d20_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d20_n.wl_hr == 8 ||  psnl.schd_d20_m.wl_hr == 0">{{psnl.schd_d20_n.wl_hr}}</span>
+
+                        </td>
+                        <td  data-ng-dblclick="td(21,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color21}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d21_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d21_m.wl_name}}"
+                          data-ng-click="wk(21,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d21_m.wl_category,$index)">{{psnl.schd_d21_m.wl_f}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d21_m.wl_hr == 8 ||  psnl.schd_d21_m.wl_hr == 0">{{psnl.schd_d21_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d21_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d21_a.wl_name}}"
+                          data-ng-click="wk(21,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d21_a.wl_category,$index)">{{psnl.schd_d21_a.wl_c}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d21_a.wl_hr == 8 ||  psnl.schd_d21_m.wl_hr == 0" >{{psnl.schd_d21_a.wl_hr}}</span>
+
+                          <label
+                           class="text-{{psnl.schd_d21_n.wl_color}} pointer"
+                           data-tooltip="{{psnl.schd_d21_n.wl_name}}"
+                           data-ng-click="wk(21,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d21_n.wl_category,$index)">{{psnl.schd_d21_n.wl_b}}</label>
+
+                          <span
+                          class="hr"
+                          data-ng-hide="psnl.schd_d21_n.wl_hr == 8 ||  psnl.schd_d21_m.wl_hr == 0">{{psnl.schd_d21_n.wl_hr}}</span>
+
+                        </td>
+                        <td  data-ng-dblclick="td(22,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color22}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d22_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d22_m.wl_name}}"
+                          data-ng-click="wk(22,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d22_m.wl_category,$index)">{{psnl.schd_d22_m.wl_f}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d22_m.wl_hr == 8 ||  psnl.schd_d22_m.wl_hr == 0">{{psnl.schd_d22_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d22_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d22_a.wl_name}}"
+                          data-ng-click="wk(22,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d22_a.wl_category,$index)">{{psnl.schd_d22_a.wl_c}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d22_a.wl_hr == 8 ||  psnl.schd_d22_m.wl_hr == 0" >{{psnl.schd_d22_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d22_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d22_n.wl_name}}"
+                          data-ng-click="wk(22,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d22_n.wl_category,$index)">{{psnl.schd_d22_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d22_n.wl_hr == 8 ||  psnl.schd_d22_m.wl_hr == 0">{{psnl.schd_d22_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(23,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color23}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d23_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d23_m.wl_name}}"
+                          data-ng-click="wk(23,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d23_m.wl_category,$index)">{{psnl.schd_d23_m.wl_f}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d23_m.wl_hr == 8 ||  psnl.schd_d23_m.wl_hr == 0">{{psnl.schd_d23_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d23_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d23_a.wl_name}}"
+                          data-ng-click="wk(23,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d23_a.wl_category,$index)">{{psnl.schd_d23_a.wl_c}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d23_a.wl_hr == 8 ||  psnl.schd_d23_m.wl_hr == 0" >{{psnl.schd_d23_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d23_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d23_n.wl_name}}"
+                          data-ng-click="wk(23,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d23_n.wl_category,$index)">{{psnl.schd_d23_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d23_n.wl_hr == 8 ||  psnl.schd_d23_m.wl_hr == 0">{{psnl.schd_d23_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(24,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color24}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d24_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d24_m.wl_name}}"
+                          data-ng-click="wk(24,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d24_m.wl_category,$index)">{{psnl.schd_d24_m.wl_f}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d24_m.wl_hr == 8 ||  psnl.schd_d24_m.wl_hr == 0">{{psnl.schd_d24_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d24_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d24_a.wl_name}}"
+                          data-ng-click="wk(24,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d24_a.wl_category,$index)">{{psnl.schd_d24_a.wl_c}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d24_a.wl_hr == 8 ||  psnl.schd_d24_m.wl_hr == 0" >{{psnl.schd_d24_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d24_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d24_n.wl_name}}"
+                          data-ng-click="wk(24,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d24_n.wl_category,$index)">{{psnl.schd_d24_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d24_n.wl_hr == 8 ||  psnl.schd_d24_m.wl_hr == 0">{{psnl.schd_d24_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(25,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color25}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d25_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d25_m.wl_name}}"
+                          data-ng-click="wk(25,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d25_m.wl_category,$index)">{{psnl.schd_d25_m.wl_f}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d25_m.wl_hr == 8 ||  psnl.schd_d25_m.wl_hr == 0">{{psnl.schd_d25_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d25_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d25_a.wl_name}}"
+                          data-ng-click="wk(25,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d25_a.wl_category,$index)">{{psnl.schd_d25_a.wl_c}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d25_a.wl_hr == 8 ||  psnl.schd_d25_m.wl_hr == 0" >{{psnl.schd_d25_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d25_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d25_n.wl_name}}"
+                          data-ng-click="wk(25,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d25_n.wl_category,$index)">{{psnl.schd_d25_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d25_n.wl_hr == 8 ||  psnl.schd_d25_m.wl_hr == 0">{{psnl.schd_d25_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(26,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color26}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d26_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d26_m.wl_name}}"
+                          data-ng-click="wk(26,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d26_m.wl_category,$index)">{{psnl.schd_d26_m.wl_f}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d26_m.wl_hr == 8 ||  psnl.schd_d26_m.wl_hr == 0">{{psnl.schd_d26_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d26_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d26_a.wl_name}}"
+                          data-ng-click="wk(26,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d26_a.wl_category,$index)">{{psnl.schd_d26_a.wl_c}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d26_a.wl_hr == 8 ||  psnl.schd_d26_m.wl_hr == 0" >{{psnl.schd_d26_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d26_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d26_n.wl_name}}"
+                          data-ng-click="wk(26,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d26_n.wl_category,$index)">{{psnl.schd_d26_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d26_n.wl_hr == 8 ||  psnl.schd_d26_m.wl_hr == 0">{{psnl.schd_d26_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(27,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color27}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d27_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d27_m.wl_name}}"
+                          data-ng-click="wk(27,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d27_m.wl_category,$index)">{{psnl.schd_d27_m.wl_f}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d27_m.wl_hr == 8 ||  psnl.schd_d27_m.wl_hr == 0">{{psnl.schd_d27_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d27_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d27_a.wl_name}}"
+                          data-ng-click="wk(27,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d27_a.wl_category,$index)">{{psnl.schd_d27_a.wl_c}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d27_a.wl_hr == 8 ||  psnl.schd_d27_m.wl_hr == 0" >{{psnl.schd_d27_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d27_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d27_n.wl_name}}"
+                          data-ng-click="wk(27,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d27_n.wl_category,$index)">{{psnl.schd_d27_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d27_n.wl_hr == 8 ||  psnl.schd_d27_m.wl_hr == 0">{{psnl.schd_d27_n.wl_hr}}</span>
+                        </td>
+                        <td   data-ng-dblclick="td(28,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" style="cursor:alias;background-color:{{color28}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d28_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d28_m.wl_name}}"
+                          data-ng-click="wk(28,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d28_m_a.wl_category,$index)">{{psnl.schd_d28_m.wl_f}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d28_m.wl_hr == 8 ||  psnl.schd_d28_m.wl_hr == 0">{{psnl.schd_d28_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d28_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d28_a.wl_name}}"
+                          data-ng-click="wk(28,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d28_a.wl_category,$index)">{{psnl.schd_d28_a.wl_c}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d28_a.wl_hr == 8 ||  psnl.schd_d28_m.wl_hr == 0" >{{psnl.schd_d28_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d28_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d28_n.wl_name}}"
+                          data-ng-click="wk(28,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d28_n_a.wl_category,$index)">{{psnl.schd_d28_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d28_n.wl_hr == 8 ||  psnl.schd_d28_m.wl_hr == 0">{{psnl.schd_d28_n.wl_hr}}</span>
+
+                        </td>
+                        <td  data-ng-dblclick="td(29,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" data-ng-show="monthTotal > 28" style="cursor:alias;background-color:{{color29}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d29_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d29_m.wl_name}}"
+                          data-ng-click="wk(29,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d29_m_a.wl_category,$index)">{{psnl.schd_d29_m.wl_f}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d29_m.wl_hr == 8 ||  psnl.schd_d29_m.wl_hr == 0">{{psnl.schd_d29_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d29_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d29_a.wl_name}}"
+                          data-ng-click="wk(29,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d29_a.wl_category,$index)">{{psnl.schd_d29_a.wl_c}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d29_a.wl_hr == 8 ||  psnl.schd_d29_m.wl_hr == 0" >{{psnl.schd_d29_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d29_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d29_n.wl_name}}"
+                          data-ng-click="wk(29,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d29_n_a.wl_category,$index)">{{psnl.schd_d29_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d29_n.wl_hr == 8 ||  psnl.schd_d29_m.wl_hr == 0">{{psnl.schd_d29_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(30,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" data-ng-show="monthTotal > 29" style="cursor:alias;background-color:{{color30}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d30_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d30_m.wl_name}}"
+                          data-ng-click="wk(30,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d30_m.wl_category,$index)">{{psnl.schd_d30_m.wl_f}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d30_m.wl_hr == 8 ||  psnl.schd_d30_m.wl_hr == 0">{{psnl.schd_d30_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d30_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d30_a.wl_name}}"
+                          data-ng-click="wk(30,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d30_a.wl_category,$index)">{{psnl.schd_d30_a.wl_c}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d30_a.wl_hr == 8 ||  psnl.schd_d30_m.wl_hr == 0" >{{psnl.schd_d30_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d30_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d30_n.wl_name}}"
+                          data-ng-click="wk(30,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d30_n.wl_category,$index)">{{psnl.schd_d30_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d30_n.wl_hr == 8 ||  psnl.schd_d30_m.wl_hr == 0">{{psnl.schd_d30_n.wl_hr}}</span>
+                        </td>
+                        <td  data-ng-dblclick="td(31,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID)" data-ng-show="monthTotal > 30" style="cursor:alias;background-color:{{color31}}" nowrap>
+                          <label
+                          class="text-{{psnl.schd_d31_m.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d31_m.wl_name}}"
+                          data-ng-click="wk(31,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d31_m.wl_category,$index)">{{psnl.schd_d31_m.wl_f}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d31_m.wl_hr == 8 ||  psnl.schd_d31_m.wl_hr == 0">{{psnl.schd_d31_m.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d31_a.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d31_a.wl_name}}"
+                          data-ng-click="wk(31,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d31_a_m.wl_category,$index)">{{psnl.schd_d31_a.wl_c}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d31_a.wl_hr == 8 ||  psnl.schd_d31_m.wl_hr == 0" >{{psnl.schd_d31_a.wl_hr}}</span>
+
+                          <label
+                          class="text-{{psnl.schd_d31_n.wl_color}} pointer"
+                          data-tooltip="{{psnl.schd_d31_n.wl_name}}"
+                          data-ng-click="wk(31,schObj.MONTHNO,schObj.YEAR,psnl.Mem_ID,psnl.schd_d31_n.wl_category,$index)">{{psnl.schd_d31_n.wl_b}}</label>
+
+                          <span class="hr" data-ng-hide="psnl.schd_d31_n.wl_hr == 8 ||  psnl.schd_d31_m.wl_hr == 0">{{psnl.schd_d31_n.wl_hr}}</span>
+                        </td>
+
+
+                        <td >{{psnl.sumNMTotal}}</td>
+                        <td class="text-red">{{psnl.cTotal}}</td>
+                        <td >{{psnl.stale}}</td>
+                        <td>{{psnl.cMoneyOT}}</td>
+
+                      </tr>
+                      <tr>
+                          <td colspan="{{monthTotalBtn}}"><b>รวม</b></td>
+                          <td ><b>{{ criteria.NMTotal }}</b></td>
+                          <td class="text-red"><b>{{ criteria.OTTotal }}</b></td>
+                          <td >{{criteria.cStale}}</td>
+                          <td>{{criteria.OTMoneyTotalStr}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <div >
+                  <div class="box box-danger box-solid" data-ng-show="httpRequestTracker.hasPendingRequests()">
+                    <div class="box-header">
+                      <h3 class="box-title text-center ">Loading...</h3>
+                    </div>
+                    <div class="box-body">กำลังประมวลผล</div>
+            <!-- /.box-body -->
+            <!-- Loading (remove the following to stop the loading)-->
+            <div class="overlay">
+              <i class="fa fa-refresh fa-spin text-red"></i>
+            </div>
+            <!-- end loading -->
+          </div>
+          <!-- /.box -->
+        </div>
+
+            </div>
+            <br>
+            <div class="row" data-ng-hide="httpRequestTracker.hasPendingRequests()">
+              <div class="col-md-6" data-ng-hide="schObj.H_FIRSTNAME == null">
+                <div class="info-box">
+                  <span class="info-box-icon bg-green"><i class="fa fa-user"></i></span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">หัวหน้า</span>
+                    <span class="info-box-number">{{criteria.head}}</span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+          <!-- /.info-box -->
+              </div>
+              <div class="col-md-6" data-ng-hide="schObj.I_FIRSTNAME == null">
+                <div class="info-box">
+                  <span class="info-box-icon bg-yellow"><i class="fa fa-search"></i></span>
+                  <div class="info-box-content">
+                    <span class="info-box-text">ผู้ตรวจสอบ</span>
+                    <span class="info-box-number">{{criteria.invest}}</span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+          <!-- /.info-box -->
+              </div>
+
+
+
+
+            </div>
+
+        </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>
